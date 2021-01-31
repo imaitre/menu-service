@@ -6,6 +6,7 @@ import com.maitre.menuservice.adapter.utils.toDomain
 import com.maitre.menuservice.adapter.utils.toJson
 import com.maitre.menuservice.adapter.utils.toResponseDTO
 import com.maitre.menuservice.domain.usecases.CreateMenuUseCase
+import java.util.logging.Level
 import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -23,7 +24,7 @@ class CreateMenuHandlerImpl(
 ) : CreateMenuHandler {
     override fun create(serverRequest: ServerRequest): Mono<ServerResponse> {
 
-        val menu: Mono<MenuResponseDTO> = serverRequest.bodyToMono(MenuRequestDTO::class.java)
+        return serverRequest.bodyToMono(MenuRequestDTO::class.java)
             .doOnNext {
                 logger.info(
                     "Create Menu Request initiated. " +
@@ -36,10 +37,17 @@ class CreateMenuHandlerImpl(
             }
             .map {
                 it.toResponseDTO()
+            }.flatMap {
+                logger.info("ResponseBody=${it.toJson()}")
+                ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .bodyValue(it)
+            }.doOnNext {
+                logger.info(
+                    "Create Menu finished. " +
+                            "ResponseCode=${it.statusCode()}, path=${it.headers()}"
+                )
             }
 
-        return ok()
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(fromPublisher(menu, MenuResponseDTO::class.java))
     }
 }
