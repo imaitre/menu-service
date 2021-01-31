@@ -1,20 +1,17 @@
 package com.maitre.menuservice.adapter.`in`.create
 
 import com.maitre.menuservice.adapter.`in`.dto.MenuRequestDTO
-import com.maitre.menuservice.adapter.`in`.dto.MenuResponseDTO
 import com.maitre.menuservice.adapter.utils.toDomain
 import com.maitre.menuservice.adapter.utils.toJson
 import com.maitre.menuservice.adapter.utils.toResponseDTO
 import com.maitre.menuservice.domain.usecases.CreateMenuUseCase
-import java.util.logging.Level
+import java.net.URI
 import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.BodyInserters.fromPublisher
-
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.ServerResponse.ok
+import org.springframework.web.reactive.function.server.ServerResponse.created
 import reactor.core.publisher.Mono
 
 @Component
@@ -39,7 +36,7 @@ class CreateMenuHandlerImpl(
                 it.toResponseDTO()
             }.flatMap {
                 logger.info("ResponseBody=${it.toJson()}")
-                ok()
+                created(URI("IMPLEMENTAR_HATEOS_SELF${serverRequest.path()}/${it.id}"))
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(it)
             }.doOnNext {
