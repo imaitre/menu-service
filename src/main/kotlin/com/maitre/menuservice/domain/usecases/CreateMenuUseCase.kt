@@ -14,7 +14,7 @@ class CreateMenuUseCase(private val logger: Logger,
 
     fun execute(menu: Menu) : Mono<Menu> {
         logger.info("Create menu use case initiated. menu=${menu.toJson()}")
-        return Menu("uuid", "custid", "nmomee", "dsfdd", true, null).toMono()//saveMenuPort.save(menu)
+        return saveMenuPort.save(menu)
             .doOnNext { logger.info("Create menu use case done.") }
     }
 }
