@@ -1,18 +1,45 @@
 package com.maitre.menuservice.adapter.`in`.create
 
 import com.maitre.menuservice.adapter.`in`.dto.MenuRequestDTO
+import com.maitre.menuservice.adapter.`in`.dto.MenuResponseDTO
+import com.maitre.menuservice.adapter.utils.toDomain
+import com.maitre.menuservice.adapter.utils.toJson
+import com.maitre.menuservice.adapter.utils.toResponseDTO
+import com.maitre.menuservice.domain.usecases.CreateMenuUseCase
+import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
+import org.springframework.web.reactive.function.BodyInserters.fromPublisher
+
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.ServerResponse.ok
 import reactor.core.publisher.Mono
-import reactor.kotlin.core.publisher.toMono
 
 @Component
-class CreateMenuHandlerImpl : CreateMenuHandler {
+class CreateMenuHandlerImpl(
+    private val logger: Logger,
+    private val createMenuUseCase: CreateMenuUseCase
+) : CreateMenuHandler {
     override fun create(serverRequest: ServerRequest): Mono<ServerResponse> {
-        val menuRequestDTO = MenuRequestDTO("CUST_0c6e1cb0-df2e-414a-98fb-73b2b8ce6b62", "Pasta", "pasta menu", true)
-        return ok().contentType(MediaType.APPLICATION_JSON).body(menuRequestDTO.toMono(), MenuRequestDTO::class.java)
+
+        val menu: Mono<MenuResponseDTO> = serverRequest.bodyToMono(MenuRequestDTO::class.java)
+            .doOnNext {
+                logger.info(
+                    "Create Menu Request initiated. " +
+                            "method=${serverRequest.method()}, path=${serverRequest.path()}, " +
+                            "body=${it.toJson()}, headers=${serverRequest.headers()}"
+                )
+            }
+            .flatMap {
+                createMenuUseCase.execute(it.toDomain())
+            }
+            .map {
+                it.toResponseDTO()
+            }
+
+        return ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(fromPublisher(menu, MenuResponseDTO::class.java))
     }
 }
