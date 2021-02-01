@@ -11,7 +11,7 @@ fun MenuRequestDTO.toDomain() =
         name = name,
         description = description,
         available = available,
-        groups = null
+        groups = groups?.map { it.toDomain() }?.toList()
     )
 
 fun Menu.toResponseDTO() =
@@ -21,7 +21,7 @@ fun Menu.toResponseDTO() =
         name = name,
         description = description,
         available = available,
-        groups = null
+        groups = groups?.map { it.toResponseDTO() }?.toList()
     )
 
 fun Menu.toEntity() =
@@ -30,7 +30,8 @@ fun Menu.toEntity() =
         customerId = customerId,
         name = name,
         description = description,
-        available = available
+        available = available,
+        groups = groups?.map { it.toEntity() }?.toList()
     )
 
 fun MenuEntity.toDomain() =
@@ -40,5 +41,5 @@ fun MenuEntity.toDomain() =
         name = name,
         description = description,
         available = available,
-        groups = null
+        groups = groups?.map { it.toDomain() }?.toList()
     )

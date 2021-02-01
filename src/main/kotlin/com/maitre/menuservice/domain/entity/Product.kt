@@ -5,7 +5,6 @@ import java.util.UUID
 
 data class Product(
     val id: String = "PROD_" + UUID.randomUUID(),
-    val groupId: String,
     val name: String,
     val description: String?,
     val amount: BigDecimal,
