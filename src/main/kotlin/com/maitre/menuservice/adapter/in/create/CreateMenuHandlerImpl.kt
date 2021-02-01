@@ -42,7 +42,7 @@ class CreateMenuHandlerImpl(
             }.doOnNext {
                 logger.info(
                     "Create Menu finished. " +
-                            "ResponseCode=${it.statusCode()}, path=${it.headers()}"
+                            "ResponseCode=${it.statusCode()}, headers=${it.headers()}"
                 )
             }
 
