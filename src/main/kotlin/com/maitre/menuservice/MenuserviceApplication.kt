@@ -9,3 +9,4 @@ class MenuserviceApplication
 fun main(args: Array<String>) {
 	runApplication<MenuserviceApplication>(*args)
 }
+

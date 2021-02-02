@@ -47,7 +47,7 @@ The idea behind this app is to manage the necessities of a menu and its partitio
     "name": "",
     "description": "",
     "available": true,
-    "group": [
+    "groups": [
         {
             "id": "GROU_fec74992-5bb9-4c88-b6c3-5460a9d3aab3",
             "menu_id": "MENU_69073798-dbf8-43e6-8083-bed3d26dc426",
@@ -55,7 +55,7 @@ The idea behind this app is to manage the necessities of a menu and its partitio
             "description": "",
             "type": "",
             "available": true,
-            "product": [
+            "products": [
                 {
                     "id": "PROD_7fba65cf-9171-48c1-a481-667f8658539e",
                     "group_id": "GROU_fec74992-5bb9-4c88-b6c3-5460a9d3aab3",
