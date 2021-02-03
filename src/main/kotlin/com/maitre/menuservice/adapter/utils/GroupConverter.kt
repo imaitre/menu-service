@@ -11,7 +11,7 @@ fun GroupRequestDTO.toDomain() =
         description = description,
         type = type,
         available = available,
-        products = null
+        products = products?.map { it.toDomain() }?.toList()
     )
 
 fun Group.toEntity() =
@@ -20,7 +20,8 @@ fun Group.toEntity() =
         name = name,
         description = description,
         type = type,
-        available = available
+        available = available,
+        products = products?.map { it.toEntity() }?.toList()
     )
 
 fun GroupEntity.toDomain() =
@@ -29,7 +30,7 @@ fun GroupEntity.toDomain() =
         description = description,
         type = type,
         available = available,
-        products = null
+        products = products?.map { it.toDomain() }?.toList()
     )
 
 fun Group.toResponseDTO() =
@@ -38,5 +39,5 @@ fun Group.toResponseDTO() =
         name = name,
         description = description,
         type = type, available = available,
-        null
+        products = products?.map { it.toResponseDTO() }?.toList()
     )
