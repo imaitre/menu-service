@@ -7,5 +7,6 @@ data class GroupEntity(
     val name: String,
     val description: String?,
     val type: GroupType,
-    val available: Boolean
+    val available: Boolean,
+    val products: List<ProductEntity>?
 )
