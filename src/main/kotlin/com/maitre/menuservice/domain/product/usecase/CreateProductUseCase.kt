@@ -14,8 +14,8 @@ class CreateProductUseCase(
 ) {
 
     fun execute(product: Product): Mono<Product> {
-        logger.info("Create menu use case initiated. menu=${product.toJson()}")
+        logger.info("Create product use case initiated. menu=${product.toJson()}")
         return saveProductPort.save(product)
-            .doOnNext { logger.info("Create menu use case done.") }
+            .doOnNext { logger.info("Create product use case done.") }
     }
 }
