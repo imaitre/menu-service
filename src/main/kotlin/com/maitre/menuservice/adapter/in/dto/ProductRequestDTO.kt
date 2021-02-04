@@ -6,6 +6,7 @@ import java.math.BigDecimal
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy::class)
 data class ProductRequestDTO(
+    val groupId: String,
     val name: String,
     val description: String?,
     val amount: BigDecimal,
