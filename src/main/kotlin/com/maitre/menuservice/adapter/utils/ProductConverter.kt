@@ -8,6 +8,7 @@ import com.maitre.menuservice.domain.entity.Product
 fun ProductRequestDTO.toDomain() =
     Product(
         name = name,
+        groupId = groupId,
         description = description,
         amount = amount,
         adultsOnly = adultsOnly,
@@ -19,6 +20,7 @@ fun ProductRequestDTO.toDomain() =
 fun Product.toEntity() =
     ProductEntity(
         id = id,
+        groupId = groupId,
         name = name,
         description = description,
         amount = amount,
@@ -31,6 +33,7 @@ fun Product.toEntity() =
 fun ProductEntity.toDomain() =
     Product(
         id = id,
+        groupId = groupId,
         name = name,
         description = description,
         amount = amount,
@@ -43,6 +46,7 @@ fun ProductEntity.toDomain() =
 fun Product.toResponseDTO() =
     ProductResponseDTO(
         id = id,
+        groupId = groupId,
         name = name,
         description = description,
         amount = amount,
