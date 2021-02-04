@@ -4,11 +4,11 @@ import java.util.UUID
 
 data class Group(
     val id: String = "GROU_" + UUID.randomUUID(),
+    val menuId: String,
     val name: String,
     val description: String?,
     val type: GroupType,
-    val available: Boolean,
-    val products: List<Product>?
+    val available: Boolean
 )
 
 enum class GroupType {
