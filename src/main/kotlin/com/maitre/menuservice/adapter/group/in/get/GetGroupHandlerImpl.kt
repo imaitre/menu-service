@@ -22,7 +22,7 @@ class GetGroupHandlerImpl(
     override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
 
         logger.info(
-                "Get group by menu_id Request initiated. " +
+                "Get groups by menu_id Request initiated. " +
                         "method=${serverRequest.method()}, path=${serverRequest.path()}, " +
                         "headers=${serverRequest.headers()}, menu_id=${serverRequest.queryParam("menu_id")}")
 
