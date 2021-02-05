@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Component
-class GroupsByMenuIdAdapter(private val groupRepository: GroupRepository) : SaveGroupPort, GetGroupsByMenuIdPort {
+class GroupAdapter(private val groupRepository: GroupRepository) : SaveGroupPort, GetGroupsByMenuIdPort {
 
     override fun save(group: Group): Mono<Group> {
         return groupRepository.save(group.toEntity())

@@ -16,7 +16,7 @@ class GetGroupsByMenuIdUseCase(private val logger: Logger,
                                private val getGroupsByMenuIdPort: GetGroupsByMenuIdPort) {
 
     fun execute(menuId: String): Flux<Group> {
-        logger.info("Get group by menu_id use case initiated. id=$menuId")
+        logger.info("Get groups by menu_id use case initiated. id=$menuId")
         return getGroupsByMenuIdPort.getByMenuId(menuId)
                 .switchIfEmpty(Mono.error(GroupNotFoundException(menuId)))
                 .doOnNext { logger.info("id=${menuId}, group=${it.toJson()}") }
