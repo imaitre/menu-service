@@ -3,6 +3,7 @@ package com.maitre.menuservice.adapter.menu.`in`.create
 import com.maitre.menuservice.adapter.group.`in`.get.GetGroupHandler
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
+import com.maitre.menuservice.exception.MissingParameterException
 import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -27,7 +28,7 @@ class GetGroupHandlerImpl(
                         "headers=${serverRequest.headers()}, menu_id=${serverRequest.queryParam("menu_id")}")
 
         val groups = getGroupsByMenuIdUseCase.execute(serverRequest.queryParam("menu_id")
-                .orElseThrow{RuntimeException("menu_id parameter is missing")}) //substituir por MissingParameterException
+                .orElseThrow{ MissingParameterException("menu_id") })
 
         return ok()
                 .contentType(MediaType.APPLICATION_STREAM_JSON)
