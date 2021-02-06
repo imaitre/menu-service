@@ -13,7 +13,7 @@ class GroupRouter(
 ) {
 
     @Bean
-    fun routerGroup() = router {
+    fun groupRoutes() = router {
         POST("/group", createGroupHandler::execute)
         GET("/group", getGroupHandler::execute)
     }
