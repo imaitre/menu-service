@@ -13,7 +13,7 @@ class MenuRouter(
 ) {
 
     @Bean
-    fun router() = router {
+    fun menuRoutes() = router {
         POST("/menu", createMenuHandler::create)
         GET("/menu/{id}", getMenuHandler::get)
     }
