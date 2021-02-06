@@ -19,7 +19,7 @@ class CreateProductHandlerImpl(
     private val createProductUseCase: CreateProductUseCase
 ) : CreateProductHandler {
 
-    override fun create(serverRequest: ServerRequest): Mono<ServerResponse> {
+    override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
 
         return serverRequest.bodyToMono(ProductRequestDTO::class.java)
             .doOnNext {
