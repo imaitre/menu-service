@@ -5,5 +5,5 @@ import org.springframework.web.reactive.function.server.ServerResponse
 import reactor.core.publisher.Mono
 
 interface CreateProductHandler {
-    fun create(serverRequest: ServerRequest): Mono<ServerResponse>
+    fun execute(serverRequest: ServerRequest): Mono<ServerResponse>
 }

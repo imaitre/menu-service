@@ -9,13 +9,13 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Service
-class GetProductByGroupUseCase(
+class GetProductsByGroupUseCase(
     private val logger: Logger,
     private val getProductByGroupPort: GetProductByGroupPort
 ) {
 
     fun execute(id: String): Flux<Product> {
-        logger.info("Get product by group use case initiated. id=$id")
+        logger.info("Get products by group use case initiated. id=$id")
         return getProductByGroupPort.getByGroup(id)
             .switchIfEmpty(Mono.error(ProductNotFoundException(id)))
             .doOnNext { logger.info("Get product by group use case done. id=${id}, menu=${it}") }

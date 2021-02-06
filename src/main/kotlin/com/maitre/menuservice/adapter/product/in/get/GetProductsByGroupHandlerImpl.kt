@@ -1,7 +1,7 @@
 package com.maitre.menuservice.adapter.product.`in`.get
 
 import com.maitre.menuservice.domain.product.entity.Product
-import com.maitre.menuservice.domain.product.usecase.GetProductByGroupUseCase
+import com.maitre.menuservice.domain.product.usecase.GetProductsByGroupUseCase
 import com.maitre.menuservice.exception.MissingParameterException
 import com.maitre.menuservice.utils.Constants.GROUP_ID
 import org.slf4j.Logger
@@ -13,19 +13,19 @@ import org.springframework.web.reactive.function.server.ServerResponse.ok
 import reactor.core.publisher.Mono
 
 @Component
-class GetProductByGroupHandlerImpl(
+class GetProductsByGroupHandlerImpl(
     private val logger: Logger,
-    private val getProductByGroupUseCase: GetProductByGroupUseCase
-) : GetProductByGroupHandler {
+    private val getProductsByGroupUseCase: GetProductsByGroupUseCase
+) : GetProductsByGroupHandler {
 
-    override fun getByGroup(serverRequest: ServerRequest): Mono<ServerResponse> {
+    override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
         logger.info(
-            "Get Product By Group Request initiated. " +
+            "Get Products By Group Request initiated. " +
                     "method=${serverRequest.method()}, path=${serverRequest.path()}, " +
                     "headers=${serverRequest.headers()}, groupId=${serverRequest.queryParam(GROUP_ID)}"
         )
 
-        val products = getProductByGroupUseCase.execute(serverRequest.queryParam(GROUP_ID)
+        val products = getProductsByGroupUseCase.execute(serverRequest.queryParam(GROUP_ID)
             .orElseThrow { MissingParameterException(GROUP_ID) })
 
         return ok()
@@ -33,7 +33,7 @@ class GetProductByGroupHandlerImpl(
             .body(products, Product::class.java)
             .doOnNext {
                 logger.info(
-                    "Get Product By Group Request finished. " +
+                    "Get Products By Group Request finished. " +
                             "ResponseCode=${it.statusCode()}, headers=${it.headers()}"
                 )
             }

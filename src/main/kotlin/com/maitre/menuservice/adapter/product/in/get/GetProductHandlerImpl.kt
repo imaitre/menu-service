@@ -16,7 +16,7 @@ class GetProductHandlerImpl(
     private val getProductUseCase: GetProductUseCase
 ) : GetProductHandler {
 
-    override fun get(serverRequest: ServerRequest): Mono<ServerResponse> {
+    override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
 
         logger.info(
             "Get Product Request initiated. " +
