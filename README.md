@@ -89,3 +89,38 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 }
 ```
 
+## setup environment
+
+### requiriments:
+- Acess to a terminal
+- Git
+- Docker-compose version 3 or later
+- Java 11 or later
+
+### steps
+
+- Clone the app
+```sh
+$ git clone git@github.com:imaitre/customer-service.git
+```
+
+- Get in the repository.
+```sh
+$ cd menu-service
+```
+
+- Start mongoDB 
+```sh
+$ docker-compose -f compose/docker-compose.yml up -d
+```
+
+
+- Build the project
+```sh
+$ ./gradlew build -x test
+```
+
+- Run the app
+```sh
+$ java -jar build/libs/menuservice-0.0.1-SNAPSHOT.jar
+```
