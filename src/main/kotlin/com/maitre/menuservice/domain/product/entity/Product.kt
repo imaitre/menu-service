@@ -12,5 +12,5 @@ data class Product(
     val adultsOnly: Boolean,
     val available: Boolean,
     val addons: Map<String, BigDecimal>?,
-    val imageUrls: List<String>
+    val imageUrls: List<String>?
 )
