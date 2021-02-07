@@ -39,7 +39,7 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 
 > __TO-DO:__ PATCH /group/{id}
 
-> __TO-DO:__ DELETE /group/{id}
+> DELETE /group/{id}
 
 (delete is a cascade process)
 
