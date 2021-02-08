@@ -23,8 +23,6 @@ class GroupRouter(
         POST("/group", createGroupHandler::execute)
         GET("/group", getGroupHandler::execute)
         DELETE("/group/{id}", deleteGroupHandler::execute)
-        PATCH("/group/{id}", updateGroupHandler::execute)
-
+        PUT("/group/{id}", updateGroupHandler::execute)
     }
-
 }

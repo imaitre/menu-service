@@ -26,6 +26,7 @@ fun Group.toEntity() =
 
 fun GroupEntity.toDomain() =
     Group(
+        id = id,
         name = name,
         menuId = menuId,
         description = description,

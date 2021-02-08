@@ -15,6 +15,7 @@ class UpdateGroupUseCase(private val logger: Logger,
 
     fun execute(group: Group, id: String): Mono<Group> {
         logger.info("Update group use case initiated. group=${group.toJson()}")
+        group.id= id
         return getGroupByIdPort.getById(id)
                 .switchIfEmpty(Mono.error(GroupNotFoundException(id)))
                 .then(saveGroupPort.save(group))
