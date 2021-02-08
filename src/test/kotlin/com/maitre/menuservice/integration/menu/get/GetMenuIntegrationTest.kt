@@ -1,4 +1,4 @@
-package com.maitre.menuservice.adapter.menu.`in`.get
+package com.maitre.menuservice.integration.menu.get
 
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class GetMenuHandlerTest {
+class GetMenuIntegrationTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient

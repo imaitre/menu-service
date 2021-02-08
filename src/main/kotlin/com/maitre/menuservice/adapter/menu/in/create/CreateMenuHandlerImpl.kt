@@ -19,7 +19,7 @@ class CreateMenuHandlerImpl(
     private val logger: Logger,
     private val createMenuUseCase: CreateMenuUseCase
 ) : CreateMenuHandler {
-    override fun create(serverRequest: ServerRequest): Mono<ServerResponse> {
+    override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
 
         return serverRequest.bodyToMono(MenuRequestDTO::class.java)
             .doOnNext {
