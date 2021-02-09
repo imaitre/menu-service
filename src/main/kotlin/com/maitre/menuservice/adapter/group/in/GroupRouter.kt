@@ -20,7 +20,6 @@ class GroupRouter(
         POST("/group", createGroupHandler::execute)
         GET("/group", getGroupHandler::execute)
         DELETE("/group/{id}", deleteGroupHandler::execute)
-
     }
 
 }
