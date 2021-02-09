@@ -4,9 +4,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class MenuserviceApplication
+class MenuServiceApplication
 
 fun main(args: Array<String>) {
-	runApplication<MenuserviceApplication>(*args)
+	runApplication<MenuServiceApplication>(*args)
 }
 

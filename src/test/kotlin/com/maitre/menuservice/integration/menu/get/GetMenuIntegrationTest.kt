@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.junit.jupiter.EnabledIf
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.kotlin.core.publisher.toMono
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
 class GetMenuIntegrationTest {
 
     @Autowired

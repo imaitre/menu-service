@@ -1,1 +1,1 @@
-rootProject.name = "menuservice"
+rootProject.name = "menu-service"
