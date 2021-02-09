@@ -21,14 +21,14 @@ class DeleteGroupHandlerImpl(
                         "method=${serverRequest.method()}, path=${serverRequest.path()}, " +
                         "headers=${serverRequest.headers()}")
 
-         deleteGroupUseCase.execute(serverRequest.pathVariable("id"))
-
-        return ServerResponse.noContent().build()
-                .doOnNext{
-                    logger.info(
-                            "Delete group by id finished"+
-                                    "ResponseCode=${it.statusCode()}, headers=${it.headers()}"
-                    )
-                }
+        return deleteGroupUseCase.execute(serverRequest.pathVariable("id"))
+                 .then(
+                         ServerResponse.noContent().build()
+                 ).doOnSuccess {
+                     logger.info(
+                             "Delete group finished. " +
+                                     "ResponseCode=${it.statusCode()}, headers=${it.headers()}"
+                     )
+                 }
     }
 }

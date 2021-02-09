@@ -17,6 +17,6 @@ class DeleteGroupUseCase(private val logger: Logger,
         return getGroupByIdPort.getById(id)
                 .switchIfEmpty(Mono.error(GroupNotFoundException(id)))
                 .then(deleteGroupPort.delete(id))
-                .doOnNext { logger.info("Delete group use case done.") }
+                .doOnSuccess { logger.info("Delete group use case done. id=${id}}") }
     }
 }

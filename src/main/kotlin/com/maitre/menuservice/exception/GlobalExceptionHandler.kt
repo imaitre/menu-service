@@ -31,6 +31,8 @@ class GlobalExceptionHandler(private val logger: Logger) : WebExceptionHandler {
         return when (throwable) {
             is MenuNotFoundException -> {
                 getDefaultResponseMessage(throwable.message, HttpStatus.NOT_FOUND)
+            }is GroupNotFoundException -> {
+                getDefaultResponseMessage(throwable.message, HttpStatus.NOT_FOUND)
             }is ProductNotFoundException -> {
                 getDefaultResponseMessage(throwable.message, HttpStatus.NOT_FOUND)
             }is GroupNotFoundException -> {
