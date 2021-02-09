@@ -39,7 +39,7 @@ class GetMenuUseCaseTest {
 
     @Test
     fun `Test Get Menu Use Case - verify if exception is throw when menu is not found`() {
-        givenSomeIncorrectGetPort()
+        givenSomeNonExistentMenu()
 
         StepVerifier.create(whenUseCaseIsExecuted())
             .expectError(MenuNotFoundException::class.java)
@@ -51,7 +51,7 @@ class GetMenuUseCaseTest {
         whenever(getMenuPort.get(any<String>())).thenReturn(Mono.just(menu))
     }
 
-    private fun givenSomeIncorrectGetPort() {
+    private fun givenSomeNonExistentMenu() {
         whenever(getMenuPort.get(any<String>())).thenReturn(Mono.empty())
     }
 
