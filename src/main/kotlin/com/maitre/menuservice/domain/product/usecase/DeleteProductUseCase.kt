@@ -20,7 +20,7 @@ class DeleteProductUseCase(private val logger: Logger,
         return getProductPort.get(id)
             .switchIfEmpty(Mono.error(ProductNotFoundException(id)))
             .then(deleteProductPort.delete(id))
-            .doOnNext { logger.info("Delete product use case done. id=${id}}") }
+            .doOnSuccess { logger.info("Delete product use case done. id=${id}}") }
 
     }
 

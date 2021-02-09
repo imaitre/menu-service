@@ -23,9 +23,9 @@ private val deleteProductUseCase: DeleteProductUseCase
         )
 
         return deleteProductUseCase.execute(serverRequest.pathVariable("id"))
-            .flatMap {
+            .then (
                 ServerResponse.noContent().build()
-            }.doOnNext {
+            ).doOnSuccess {
                 logger.info(
                     "Delete Product finished. " +
                             "ResponseCode=${it.statusCode()}, headers=${it.headers()}"
