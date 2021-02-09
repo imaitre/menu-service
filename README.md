@@ -117,7 +117,7 @@ $ docker-compose -f compose/docker-compose.yml up -d
 
 - Build the project
 ```sh
-$ ./gradlew build -x test
+$ ./gradlew build
 ```
 
 - Run the app

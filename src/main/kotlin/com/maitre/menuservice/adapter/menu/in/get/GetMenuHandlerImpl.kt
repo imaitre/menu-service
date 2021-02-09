@@ -17,7 +17,7 @@ class GetMenuHandlerImpl(
     private val getMenuUseCase: GetMenuUseCase
 ) : GetMenuHandler {
 
-    override fun get(serverRequest: ServerRequest): Mono<ServerResponse> {
+    override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
 
         logger.info(
             "Get Menu Request initiated. " +
