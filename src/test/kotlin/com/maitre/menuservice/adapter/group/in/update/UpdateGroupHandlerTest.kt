@@ -1,64 +1,64 @@
-package com.maitre.menuservice.adapter.group.`in`.create
+package com.maitre.menuservice.adapter.group.`in`.update
 
 import com.maitre.menuservice.adapter.group.`in`.dto.GroupRequestDTO
-import com.maitre.menuservice.adapter.menu.`in`.create.CreateGroupHandlerImpl
+import com.maitre.menuservice.adapter.menu.`in`.create.UpdateGroupHandlerImpl
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
-import com.maitre.menuservice.domain.group.usecases.CreateGroupUseCase
+import com.maitre.menuservice.domain.group.usecases.UpdateGroupUseCase
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerRequest
 import reactor.kotlin.core.publisher.toMono
 import reactor.test.StepVerifier
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
- class CreateGroupHandlerTest {
-
+class UpdateGroupHandlerTest{
     private val logger: Logger = mock()
-    private val createGroupUseCase: CreateGroupUseCase = mock()
-    private val createGroupHandler = CreateGroupHandlerImpl(logger, createGroupUseCase)
+    private val updateGroupUseCase: UpdateGroupUseCase = mock()
+    private val updateGroupHandler = UpdateGroupHandlerImpl(logger, updateGroupUseCase)
     private val serverRequest: ServerRequest = mock()
 
+
     @Test
-    fun `Test Create Group Handler - verify status code and header`() {
+    fun `Test Update Group Handler - verify status code and header`() {
 
         givenSomeCorrectRequest()
 
         whenHandlerIsExecuted()
                 .map {
                     Assertions.assertEquals(
-                            201, it.rawStatusCode()
+                            200, it.rawStatusCode()
                     )
                     Assertions.assertEquals(MediaType.APPLICATION_JSON, it.headers().contentType)
                 }
                 .block()
     }
     @Test
-    fun `Test Create Group Handler - verify if use case is being called`() {
+    fun `Test Update Group Handler - verify if use case is being called`() {
         givenSomeCorrectRequest()
 
         whenHandlerIsExecuted().block()
 
-        verify(createGroupUseCase, times(1)).execute(any<Group>())
+        verify(updateGroupUseCase, times(1)).execute(any<Group>(), any<String>())
     }
 
     @Test
-    fun `Test Create Group Handler - verify if an event is emitted`() {
+    fun `Test Update Group Handler - verify if an event is emitted`() {
         givenSomeCorrectRequest()
 
         StepVerifier.create(whenHandlerIsExecuted())
                 .expectNextCount(1)
                 .verifyComplete()
     }
-    private fun whenHandlerIsExecuted() = createGroupHandler.execute(serverRequest)
+
+    private fun whenHandlerIsExecuted() = updateGroupHandler.execute(serverRequest)
 
     private fun givenSomeCorrectRequest() {
+        whenever(serverRequest.pathVariable("id")).thenReturn("GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3")
         whenever(serverRequest.bodyToMono(GroupRequestDTO::class.java)).thenReturn(groupRequestDTO)
-        whenever(createGroupUseCase.execute(any<Group>())).thenReturn(group)
+        whenever(updateGroupUseCase.execute(any<Group>(), any<String>())).thenReturn(group)
     }
     private val groupRequestDTO = GroupRequestDTO(
             "MENU_bc4743a8-1130-4127-a057-0aacc950a1e3",

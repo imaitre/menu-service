@@ -1,45 +1,63 @@
 package com.maitre.menuservice.adapter.group.`in`.get
 
+import com.maitre.menuservice.adapter.menu.`in`.create.GetGroupHandlerImpl
+import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
+import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
+import com.nhaarman.mockitokotlin2.*
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.web.reactive.server.WebTestClient
+import org.slf4j.Logger
+import org.springframework.http.MediaType
+import org.springframework.web.reactive.function.server.ServerRequest
+import reactor.core.publisher.Flux
+import java.util.*
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 internal class GetGroupHandlerTest{
 
-    @Autowired
-    lateinit var webTestClient: WebTestClient
+    private val logger: Logger = mock()
+    private val getGroupsByMenuIdUseCase: GetGroupsByMenuIdUseCase = mock()
+    private val getGroupHandler = GetGroupHandlerImpl(logger, getGroupsByMenuIdUseCase)
+    private val serverRequest: ServerRequest = mock()
+
 
     @Test
-    fun `Should get a groups by menu_id`() {
-        webTestClient
-                .get()
-                .uri("/group?menu_id=MENU_af60830b-d190-43bf-afcb-f5cc2656ea25")
-                .exchange()
-                .expectStatus().isOk
-                .expectBody()
-                .jsonPath("$.id").exists()
-                .jsonPath("$.menu_id").isEqualTo("GROU_6e2d194f-a31b-4767-926a-cd9b28f3bfaa")
-                .jsonPath("$.name").isEqualTo("Ice Cream")
-                .jsonPath("$.description").isEqualTo("delicious ice cream")
-                .jsonPath("$.type").isEqualTo(GroupType.ICE_CREAM.name)
-                .jsonPath("$.available").isEqualTo(true)
+    fun `Test Get Group Handler - verify status code and header`() {
+        givenSomeCorrectRequest()
+
+        whenHandlerIsExecuted()
+                .map {
+                    Assertions.assertEquals(
+                            200, it.rawStatusCode()
+                    )
+                    Assertions.assertEquals(MediaType.APPLICATION_STREAM_JSON, it.headers().contentType)
+                }
+                .block()
     }
 
     @Test
-    fun `Should respond 404 NOT_FOUND if menu is not found`() {
-        webTestClient
-                .get()
-                .uri("/group?menu_id=123a")
-                .exchange()
-                .expectStatus().isNotFound
-                .expectBody()
-                .jsonPath("$.error_messages").isArray
-                .jsonPath("$.error_messages.length()").isEqualTo(1)
-                .jsonPath("$.error_messages[*].description").isEqualTo("No group found. id=123a")
+    fun `Test Get Group Handler - verify if use case is being called`() {
+        givenSomeCorrectRequest()
 
+        whenHandlerIsExecuted().block()
+
+        verify(getGroupsByMenuIdUseCase, times(1)).execute(any<String>())
     }
 
+
+    private fun whenHandlerIsExecuted() = getGroupHandler.execute(serverRequest)
+
+    private fun givenSomeCorrectRequest() {
+        whenever(serverRequest.queryParam("menu_id")).thenReturn(Optional.of("MENU_af60830b-d190-43bf-afcb-f5cc2656ea25"))
+        whenever(getGroupsByMenuIdUseCase.execute(any<String>())).thenReturn(Flux.just(group))
+    }
+
+
+    private val group = Group(
+            "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
+            "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
+            "Ice Cream",
+            "delicious ice cream",
+            GroupType.ICE_CREAM,
+            true)
 }

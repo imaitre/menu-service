@@ -1,6 +1,6 @@
 package com.maitre.menuservice.domain.group.entity
 
-import java.util.*
+import java.util.UUID
 
 data class Group(
         var id: String = "GROU_" + UUID.randomUUID(),
