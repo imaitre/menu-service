@@ -3,9 +3,13 @@ package com.maitre.menuservice.integration.group.get
 import com.maitre.menuservice.domain.group.entity.GroupType
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.junit.jupiter.EnabledIf
 import org.springframework.test.web.reactive.server.WebTestClient
 
-class GetGroupHandlerTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
+class GetGroupIntegrationTest {
     @Autowired
     lateinit var webTestClient: WebTestClient
 

@@ -4,18 +4,17 @@ import com.maitre.menuservice.adapter.menu.`in`.create.GetGroupHandlerImpl
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerRequest
 import reactor.core.publisher.Flux
-import java.util.Optional
+import reactor.test.StepVerifier
+import java.util.*
 
-internal class GetGroupHandlerTest{
+class GetGroupHandlerTest{
 
     private val logger: Logger = mock()
     private val getGroupsByMenuIdUseCase: GetGroupsByMenuIdUseCase = mock()
@@ -46,6 +45,15 @@ internal class GetGroupHandlerTest{
         verify(getGroupsByMenuIdUseCase, times(1)).execute(any<String>())
     }
 
+    @Test
+    fun `Test Get Group Handler - verify if an event is emitted`() {
+        givenSomeCorrectRequest()
+
+        StepVerifier.create(whenHandlerIsExecuted())
+                .expectNextCount(1)
+                .verifyComplete()
+    }
+
 
     private fun whenHandlerIsExecuted() = getGroupHandler.execute(serverRequest)
 
@@ -53,7 +61,7 @@ internal class GetGroupHandlerTest{
         whenever(serverRequest.queryParam("menu_id")).thenReturn(Optional.of("MENU_af60830b-d190-43bf-afcb-f5cc2656ea25"))
         whenever(getGroupsByMenuIdUseCase.execute(any<String>())).thenReturn(Flux.just(group))
     }
-    
+
     private val group = Group(
             "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
             "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
