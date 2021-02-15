@@ -14,7 +14,7 @@ internal class GetGroupsByMenuIdUseCaseTest{
 
     private val logger: Logger = mock()
     private val getGroupsByMenuIdPort: GetGroupsByMenuIdPort = mock()
-    private val getMenuUseCase = GetGroupsByMenuIdUseCase(logger, getGroupsByMenuIdPort)
+    private val getGroupsUseCase = GetGroupsByMenuIdUseCase(logger, getGroupsByMenuIdPort)
 
 
     @Test
@@ -42,8 +42,8 @@ internal class GetGroupsByMenuIdUseCaseTest{
         StepVerifier.create(whenUseCaseIsExecuted())
                 .expectError(GroupNotFoundException::class.java)
                 .verify()
-
     }
+
     private fun givenSomeCorrectGetPort() {
         whenever(getGroupsByMenuIdPort.getByMenuId(any<String>())).thenReturn(Flux.just(group))
     }
@@ -53,7 +53,7 @@ internal class GetGroupsByMenuIdUseCaseTest{
     }
 
     private fun whenUseCaseIsExecuted() =
-            getMenuUseCase.execute("MENU_bc4743a8-1130-4127-a057-0aacc950a1e3")
+        getGroupsUseCase.execute("MENU_bc4743a8-1130-4127-a057-0aacc950a1e3")
 
     private val group = Group(
             "GROU_3145fe83-72a1-4ae8-9183-51f31e0213f9",
