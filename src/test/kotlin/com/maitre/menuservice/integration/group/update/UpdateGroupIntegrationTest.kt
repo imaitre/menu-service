@@ -1,12 +1,10 @@
-package com.maitre.menuservice.integration.group.create
+package com.maitre.menuservice.integration.group.update
 
 import com.maitre.menuservice.adapter.group.`in`.dto.GroupRequestDTO
 import com.maitre.menuservice.adapter.group.out.GroupRepository
-import com.maitre.menuservice.adapter.menu.out.MenuRepository
-import com.maitre.menuservice.adapter.menu.out.persistence.entity.MenuEntity
+import com.maitre.menuservice.adapter.group.out.persistence.entity.GroupEntity
 import com.maitre.menuservice.domain.group.entity.GroupType
 import org.junit.jupiter.api.Test
-import org.mockito.Mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
@@ -16,31 +14,28 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Mono
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
-class CreateGroupIntegrationTest {
-
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+class UpdateGroupIntegrationTest {
     @Autowired
     lateinit var webTestClient: WebTestClient
 
     @Autowired
-    lateinit var menuRepository: MenuRepository
-    @Mock
-    lateinit var createGroupRepository: GroupRepository
+    lateinit var groupRepository: GroupRepository
 
     @Test
-    fun `Should create a group`() {
-        givenMenuSavedInDatabase().map{
+    fun `Should update a group`() {
+        givenGroupSavedInDatabase().map{
             val groupRequestDTO = GroupRequestDTO(
-                it.id,
+                it.menuId,
                 "Ice Cream",
                 "delicious ice cream",
                 GroupType.ICE_CREAM,
-                true)
+                false)
 
             webTestClient
-                .post()
-                .uri("/group")
+                .put()
+                .uri("/group/${it.id}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(groupRequestDTO)
                 .exchange()
@@ -51,12 +46,12 @@ class CreateGroupIntegrationTest {
                 .jsonPath("$.name").isEqualTo("Ice Cream")
                 .jsonPath("$.description").isEqualTo("delicious ice cream")
                 .jsonPath("$.type").isEqualTo(GroupType.ICE_CREAM.name)
-                .jsonPath("$.available").isEqualTo(true)
+                .jsonPath("$.available").isEqualTo(false)
         }
     }
 
     @Test
-    fun `Should respond 404 NOT_FOUND if menu is not found`() {
+    fun `Should respond 404 NOT_FOUND if group is not found`() {
 
         val groupRequestDTO = GroupRequestDTO(
             "MENU_1",
@@ -65,8 +60,8 @@ class CreateGroupIntegrationTest {
             GroupType.ICE_CREAM,
             true)
         webTestClient
-            .post()
-            .uri("/group")
+            .put()
+            .uri("/group/1234")
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(groupRequestDTO)
             .exchange()
@@ -74,16 +69,18 @@ class CreateGroupIntegrationTest {
             .expectBody()
             .jsonPath("$.error_messages").isArray
             .jsonPath("$.error_messages.length()").isEqualTo(1)
-            .jsonPath("$.error_messages[*].description").isEqualTo("Menu not found. id=MENU_1")
+            .jsonPath("$.error_messages[*].description").isEqualTo("Group not found. id=1234")
     }
 
-    private fun givenMenuSavedInDatabase(): Mono<MenuEntity> {
-        val menuEntity = MenuEntity(
+    private fun givenGroupSavedInDatabase(): Mono<GroupEntity> {
+        val group = GroupEntity(
+            "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
             "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
-            "CUST_0c6e1cb0-df2e-414a-98fb-73b2b8ce6b62",
-            "Monday menu",
-            "some description.",
+            "Ice Cream",
+            "delicious ice cream",
+            GroupType.ICE_CREAM,
             true)
-        return menuRepository.save(menuEntity)
+        return groupRepository.save(group)
     }
+
 }

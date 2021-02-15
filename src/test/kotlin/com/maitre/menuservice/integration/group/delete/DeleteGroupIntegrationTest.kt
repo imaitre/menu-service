@@ -1,9 +1,10 @@
-package com.maitre.menuservice.integration.group.get
+package com.maitre.menuservice.integration.group.delete
 
 import com.maitre.menuservice.adapter.group.out.GroupRepository
 import com.maitre.menuservice.adapter.group.out.persistence.entity.GroupEntity
 import com.maitre.menuservice.domain.group.entity.GroupType
 import org.junit.jupiter.api.Test
+import org.mockito.Mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
@@ -11,48 +12,39 @@ import org.springframework.test.context.junit.jupiter.EnabledIf
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Mono
 
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
-class GetGroupIntegrationTest {
+class DeleteGroupIntegrationTest {
     @Autowired
     lateinit var webTestClient: WebTestClient
+
     @Autowired
     lateinit var groupRepository: GroupRepository
+    @Mock
+    lateinit var createGroupRepository: GroupRepository
+
 
     @Test
-    fun `Should get a groups by menu_id`() {
+    fun `Should delete a group`() {
         givenGroupSavedInDatabase().map{
             webTestClient
-                .get()
-                .uri("/group?menu_id=${it.menuId}")
+                .delete()
+                .uri("/group/${it.id}")
                 .exchange()
-                .expectStatus().isOk
-                .expectBody()
-                .jsonPath("$.id").exists()
-                .jsonPath("$.menu_id").isEqualTo(it.id)
-                .jsonPath("$.name").isEqualTo("Ice Cream")
-                .jsonPath("$.description").isEqualTo("delicious ice cream")
-                .jsonPath("$.type").isEqualTo(GroupType.ICE_CREAM.name)
-                .jsonPath("$.available").isEqualTo(true)
-
+                .expectStatus().isNoContent
         }
-
     }
 
     @Test
-    fun `Should respond 404 NOT_FOUND if menu is not found`() {
+    fun `Should respond 404 NOT_FOUND if group is not found`() {
         webTestClient
-                .get()
-                .uri("/group?menu_id=123a")
-                .exchange()
-                .expectStatus().isNotFound
-                .expectBody()
-                .jsonPath("$.error_messages").isArray
-                .jsonPath("$.error_messages.length()").isEqualTo(1)
-                .jsonPath("$.error_messages[*].description").isEqualTo("Group not found. id=123a")
+            .delete()
+            .uri("/group/123")
+            .exchange()
+            .expectStatus().isNotFound
     }
-
 
     private fun givenGroupSavedInDatabase(): Mono<GroupEntity> {
         val group = GroupEntity(
@@ -64,5 +56,4 @@ class GetGroupIntegrationTest {
             true)
         return groupRepository.save(group)
     }
-
 }
