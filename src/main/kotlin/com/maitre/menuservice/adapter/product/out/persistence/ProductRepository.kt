@@ -4,8 +4,12 @@ import com.maitre.menuservice.adapter.product.out.persistence.entity.ProductEnti
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 @Repository
 interface ProductRepository : ReactiveMongoRepository<ProductEntity, String>{
     fun findByGroupId(groupId: String) : Flux<ProductEntity>
+
+    fun deleteByGroupId(groupId: String) : Mono<Void>
+
 }
