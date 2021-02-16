@@ -11,9 +11,8 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.ServerResponse.created
+import org.springframework.web.reactive.function.server.ServerResponse.ok
 import reactor.core.publisher.Mono
-import java.net.URI
 
 @Component
 class UpdateGroupHandlerImpl(
@@ -38,15 +37,12 @@ class UpdateGroupHandlerImpl(
                     it.toResponseDTO()
                 }.flatMap {
                     logger.info("ResponseBody=${it.toJson()}")
-                    created(URI("IMPLEMENTAR_HATEOS_SELF${serverRequest.path()}/${it.id}"))
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .bodyValue(it)
+                    ok().contentType(MediaType.APPLICATION_JSON).bodyValue(it)
                 }.doOnNext {
                     logger.info(
                             "Update Group finished. " +
                                     "ResponseCode=${it.statusCode()}, headers=${it.headers()}"
                     )
                 }
-
     }
 }
