@@ -24,7 +24,7 @@ class CreateMenuUseCaseTest {
 
         whenUseCaseIsExecuted()
 
-        verify(getMenuPort, times(1)).get(any<String>())
+        verify(getMenuByIdPort, times(1)).getById(any<String>())
         verify(saveGroupPort, times(1)).save(any<Group>())
     }
 

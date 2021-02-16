@@ -1,7 +1,6 @@
 package com.maitre.menuservice.adapter.group.`in`.create
 
 import com.maitre.menuservice.adapter.group.`in`.dto.GroupRequestDTO
-import com.maitre.menuservice.adapter.menu.`in`.create.CreateGroupHandlerImpl
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.usecases.CreateGroupUseCase
@@ -20,7 +19,7 @@ import reactor.test.StepVerifier
 
     private val logger: Logger = mock()
     private val createGroupUseCase: CreateGroupUseCase = mock()
-    private val createGroupHandler = CreateGroupHandlerImpl(logger, createGroupUseCase)
+    private val createGroupHandler = CreateGroupHandlerImpl(logger, createGroupUseCase, 8080,"localhost")
     private val serverRequest: ServerRequest = mock()
 
     @Test
