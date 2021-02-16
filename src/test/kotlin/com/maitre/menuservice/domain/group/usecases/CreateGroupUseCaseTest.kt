@@ -11,7 +11,7 @@ import org.slf4j.Logger
 import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
 
-class CreateMenuUseCaseTest {
+class CreateGroupUseCaseTest {
 
     private val logger: Logger = mock()
     private val saveGroupPort: SaveGroupPort = mock()
