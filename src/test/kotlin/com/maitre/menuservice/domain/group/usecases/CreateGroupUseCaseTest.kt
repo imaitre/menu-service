@@ -24,6 +24,7 @@ class CreateMenuUseCaseTest {
 
         whenUseCaseIsExecuted()
 
+        verify(getMenuPort, times(1)).get(any<String>())
         verify(saveGroupPort, times(1)).save(any<Group>())
     }
 
@@ -38,7 +39,6 @@ class CreateMenuUseCaseTest {
     }
 
     private fun givenSomeCorrectSavePort() {
-        whenever(saveGroupPort.save(any<Group>())).thenReturn(Mono.just(group))
         whenever(saveGroupPort.save(any<Group>())).thenReturn(Mono.just(group))
     }
 
