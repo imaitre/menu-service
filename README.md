@@ -111,7 +111,7 @@ $ cd menu-service
 
 - Start mongoDB 
 ```sh
-$ docker-compose -f compose/docker-compose.yml up -d
+$ docker-compose -f docker-compose.yml up -d
 ```
 
 
