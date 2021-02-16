@@ -29,6 +29,7 @@ class DeleteMenuHandlerTest {
             }
             .block()
     }
+
     @Test
     fun `Test Delete Menu Handler - verify if use case is being called`() {
         givenSomeCorrectRequest()
