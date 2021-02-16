@@ -1,14 +1,14 @@
 package com.maitre.menuservice.domain.group.entity
 
-import java.util.UUID
+import java.util.*
 
 data class Group(
-    val id: String = "GROU_" + UUID.randomUUID(),
-    val menuId: String,
-    val name: String,
-    val description: String?,
-    val type: GroupType,
-    val available: Boolean
+        var id: String = "GROU_" + UUID.randomUUID(),
+        val menuId: String,
+        val name: String,
+        val description: String?,
+        val type: GroupType,
+        val available: Boolean
 )
 
 enum class GroupType {

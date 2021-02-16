@@ -35,7 +35,9 @@ class GlobalExceptionHandler(private val logger: Logger) : WebExceptionHandler {
                 getDefaultResponseMessage(throwable.message, HttpStatus.NOT_FOUND)
             }is ProductNotFoundException -> {
                 getDefaultResponseMessage(throwable.message, HttpStatus.NOT_FOUND)
-            } is MissingParameterException -> {
+            }is GroupNotFoundException -> {
+                getDefaultResponseMessage(throwable.message, HttpStatus.NOT_FOUND)
+            }is MissingParameterException -> {
                 getDefaultResponseMessage(throwable.message, HttpStatus.BAD_REQUEST)
             }
             else -> {
