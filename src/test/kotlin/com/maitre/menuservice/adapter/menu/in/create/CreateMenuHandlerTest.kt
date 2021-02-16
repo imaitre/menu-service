@@ -20,7 +20,7 @@ class CreateMenuHandlerTest {
 
     private val logger: Logger = mock()
     private val createMenuUseCase: CreateMenuUseCase = mock()
-    private val createMenuHandler = CreateMenuHandlerImpl(logger, createMenuUseCase)
+    private val createMenuHandler = CreateMenuHandlerImpl(logger, createMenuUseCase, 8080, "http://localhost")
     private val serverRequest: ServerRequest = mock()
 
     @Test

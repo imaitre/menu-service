@@ -7,16 +7,22 @@ import com.maitre.menuservice.utils.toJson
 import com.maitre.menuservice.utils.toResponseDTO
 import java.net.URI
 import org.slf4j.Logger
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.ServerResponse.created
 import reactor.core.publisher.Mono
 
 @Component
 class CreateProductHandlerImpl(
     private val logger: Logger,
-    private val createProductUseCase: CreateProductUseCase
+    private val createProductUseCase: CreateProductUseCase,
+    @Value("\${server.port}")
+    private var port: Int,
+    @Value("\${server.uri}")
+    private val uri: String
 ) : CreateProductHandler {
 
     override fun execute(serverRequest: ServerRequest): Mono<ServerResponse> {
@@ -36,7 +42,7 @@ class CreateProductHandlerImpl(
                 it.toResponseDTO()
             }.flatMap {
                 logger.info("ResponseBody=${it.toJson()}")
-                ServerResponse.created(URI("IMPLEMENTAR_HATEOS_SELF${serverRequest.path()}/${it.id}"))
+                created(URI("$uri:$port${serverRequest.path()}/${it.id}"))
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(it)
             }.doOnNext {
