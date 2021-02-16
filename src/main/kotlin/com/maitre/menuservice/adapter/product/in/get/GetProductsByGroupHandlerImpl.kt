@@ -29,7 +29,7 @@ class GetProductsByGroupHandlerImpl(
             .orElseThrow { MissingParameterException(GROUP_ID) })
 
         return ok()
-            .contentType(MediaType.APPLICATION_STREAM_JSON)
+            .contentType(MediaType.TEXT_EVENT_STREAM)
             .body(products, Product::class.java)
             .doOnNext {
                 logger.info(

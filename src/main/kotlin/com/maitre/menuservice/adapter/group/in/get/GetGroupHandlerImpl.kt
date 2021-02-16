@@ -1,6 +1,5 @@
-package com.maitre.menuservice.adapter.menu.`in`.create
+package com.maitre.menuservice.adapter.group.`in`.get
 
-import com.maitre.menuservice.adapter.group.`in`.get.GetGroupHandler
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
 import com.maitre.menuservice.exception.MissingParameterException
@@ -10,9 +9,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.ServerResponse.ok
-import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import java.lang.RuntimeException
 
 @Component
 class GetGroupHandlerImpl(
@@ -31,7 +28,7 @@ class GetGroupHandlerImpl(
                 .orElseThrow{ MissingParameterException("menu_id") })
 
         return ok()
-                .contentType(MediaType.APPLICATION_STREAM_JSON)
+                .contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(groups, Group::class.java)
                 .doOnNext{
                     logger.info(
