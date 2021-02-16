@@ -1,7 +1,7 @@
 package com.maitre.menuservice.domain.menu.usecases
 
 import com.maitre.menuservice.domain.menu.entity.Menu
-import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuPort
+import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuByIdPort
 import com.maitre.menuservice.exception.MenuNotFoundException
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -16,8 +16,8 @@ import reactor.test.StepVerifier
 class GetMenuUseCaseTest {
 
     private val logger: Logger = mock()
-    private val getMenuPort: GetMenuPort = mock()
-    private val getMenuUseCase = GetMenuUseCase(logger, getMenuPort)
+    private val getMenuByIdPort: GetMenuByIdPort = mock()
+    private val getMenuUseCase = GetMenuUseCase(logger, getMenuByIdPort)
 
     @Test
     fun `Test Get Menu Use Case - verify if get port is being called`() {
@@ -25,7 +25,7 @@ class GetMenuUseCaseTest {
 
         whenUseCaseIsExecuted()
 
-        verify(getMenuPort, times(1)).get(any<String>())
+        verify(getMenuByIdPort, times(1)).getById(any<String>())
     }
 
     @Test
@@ -48,11 +48,11 @@ class GetMenuUseCaseTest {
     }
 
     private fun givenSomeCorrectGetPort() {
-        whenever(getMenuPort.get(any<String>())).thenReturn(Mono.just(menu))
+        whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.just(menu))
     }
 
     private fun givenSomeNonExistentMenu() {
-        whenever(getMenuPort.get(any<String>())).thenReturn(Mono.empty())
+        whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.empty())
     }
 
     private fun whenUseCaseIsExecuted() =

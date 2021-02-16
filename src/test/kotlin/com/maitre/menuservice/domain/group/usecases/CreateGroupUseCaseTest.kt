@@ -4,7 +4,7 @@ import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.port.out.persistence.SaveGroupPort
 import com.maitre.menuservice.domain.menu.entity.Menu
-import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuPort
+import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuByIdPort
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
@@ -15,8 +15,8 @@ class CreateGroupUseCaseTest {
 
     private val logger: Logger = mock()
     private val saveGroupPort: SaveGroupPort = mock()
-    private val getMenuPort: GetMenuPort = mock()
-    private val createGroupUseCase = CreateGroupUseCase(logger, saveGroupPort, getMenuPort)
+    private val getMenuByIdPort: GetMenuByIdPort = mock()
+    private val createGroupUseCase = CreateGroupUseCase(logger, saveGroupPort, getMenuByIdPort)
     @Test
     fun `Test Create Group Use Case - verify if save port is being called`() {
         givenSomeCorrectMenuPort()
@@ -24,7 +24,7 @@ class CreateGroupUseCaseTest {
 
         whenUseCaseIsExecuted()
 
-        verify(getMenuPort, times(1)).get(any<String>())
+        verify(getMenuByIdPort, times(1)).getById(any<String>())
         verify(saveGroupPort, times(1)).save(any<Group>())
     }
 
@@ -43,7 +43,7 @@ class CreateGroupUseCaseTest {
     }
 
     private fun givenSomeCorrectMenuPort() {
-        whenever(getMenuPort.get(any<String>())).thenReturn(Mono.just(menu))
+        whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.just(menu))
     }
 
     private fun whenUseCaseIsExecuted() = createGroupUseCase.execute(group)
