@@ -57,7 +57,6 @@ class DeleteMenuUseCaseTest {
         whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.just(menu))
         whenever(deleteMenuPort.delete(any<String>())).thenReturn(Mono.empty())
         whenever(deleteGroupByMenuIdPort.deleteByMenuId(any<String>())).thenReturn(Mono.empty())
-
     }
 
     private fun givenSomeNonExistentProduct() {
