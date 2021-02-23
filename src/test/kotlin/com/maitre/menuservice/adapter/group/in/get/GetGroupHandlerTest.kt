@@ -30,7 +30,7 @@ class GetGroupHandlerTest{
                     Assertions.assertEquals(
                             200, it.rawStatusCode()
                     )
-                    Assertions.assertEquals(MediaType.APPLICATION_STREAM_JSON, it.headers().contentType)
+                    Assertions.assertEquals(MediaType.TEXT_EVENT_STREAM, it.headers().contentType)
                 }
                 .block()
     }
