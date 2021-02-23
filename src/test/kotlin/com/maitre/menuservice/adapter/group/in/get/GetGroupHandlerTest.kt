@@ -1,6 +1,5 @@
 package com.maitre.menuservice.adapter.group.`in`.get
 
-import com.maitre.menuservice.adapter.menu.`in`.create.GetGroupHandlerImpl
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
