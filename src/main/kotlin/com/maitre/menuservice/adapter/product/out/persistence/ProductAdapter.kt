@@ -1,7 +1,11 @@
 package com.maitre.menuservice.adapter.product.out.persistence
 
 import com.maitre.menuservice.domain.product.entity.Product
-import com.maitre.menuservice.domain.product.port.out.persistence.*
+import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductPort
+import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductsByGroupIdPort
+import com.maitre.menuservice.domain.product.port.out.persistence.GetProductPort
+import com.maitre.menuservice.domain.product.port.out.persistence.GetProductsByGroupPort
+import com.maitre.menuservice.domain.product.port.out.persistence.SaveProductPort
 import com.maitre.menuservice.utils.toDomain
 import com.maitre.menuservice.utils.toEntity
 import org.springframework.stereotype.Component
@@ -9,7 +13,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Component
-class ProductsAdapter(private val productRepository: ProductRepository) :
+class ProductAdapter(private val productRepository: ProductRepository) :
     SaveProductPort, GetProductPort, GetProductsByGroupPort, DeleteProductPort, DeleteProductsByGroupIdPort {
 
     override fun save(product: Product): Mono<Product> {
