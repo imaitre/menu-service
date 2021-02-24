@@ -4,7 +4,11 @@ import com.maitre.menuservice.adapter.group.`in`.dto.GroupRequestDTO
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.usecases.CreateGroupUseCase
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
@@ -19,7 +23,7 @@ import reactor.test.StepVerifier
 
     private val logger: Logger = mock()
     private val createGroupUseCase: CreateGroupUseCase = mock()
-    private val createGroupHandler = CreateGroupHandlerImpl(logger, createGroupUseCase, 8080,"localhost")
+    private val createGroupHandler = CreateGroupHandlerImpl(logger, createGroupUseCase, 8080, "http://localhost")
     private val serverRequest: ServerRequest = mock()
 
     @Test
