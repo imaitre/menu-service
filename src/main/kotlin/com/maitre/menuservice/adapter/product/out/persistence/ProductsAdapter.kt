@@ -9,8 +9,8 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Component
-class ProductAdapter(private val productRepository: ProductRepository) :
-    SaveProductPort, GetProductPort, GetProductByGroupPort, DeleteProductPort, DeleteProductByGroupIdPort {
+class ProductsAdapter(private val productRepository: ProductRepository) :
+    SaveProductPort, GetProductPort, GetProductsByGroupPort, DeleteProductPort, DeleteProductsByGroupIdPort {
 
     override fun save(product: Product): Mono<Product> {
         return productRepository.save(product.toEntity())

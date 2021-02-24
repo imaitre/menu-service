@@ -1,12 +1,11 @@
 package com.maitre.menuservice.adapter.group.out
 
 import com.maitre.menuservice.domain.group.entity.Group
-import com.maitre.menuservice.domain.group.port.out.persistence.DeleteGroupByMenuIdPort
 import com.maitre.menuservice.domain.group.port.out.persistence.DeleteGroupPort
+import com.maitre.menuservice.domain.group.port.out.persistence.DeleteGroupsByMenuIdPort
 import com.maitre.menuservice.domain.group.port.out.persistence.GetGroupByIdPort
 import com.maitre.menuservice.domain.group.port.out.persistence.GetGroupsByMenuIdPort
 import com.maitre.menuservice.domain.group.port.out.persistence.SaveGroupPort
-
 import com.maitre.menuservice.utils.toDomain
 import com.maitre.menuservice.utils.toEntity
 import org.springframework.stereotype.Component
@@ -16,7 +15,7 @@ import reactor.core.publisher.Mono
 @Component
 class GroupAdapter(private val groupRepository: GroupRepository) : SaveGroupPort, GetGroupsByMenuIdPort,
     DeleteGroupPort, GetGroupByIdPort,
-    DeleteGroupByMenuIdPort {
+    DeleteGroupsByMenuIdPort {
 
     override fun save(group: Group): Mono<Group> {
         return groupRepository.save(group.toEntity())

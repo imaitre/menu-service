@@ -4,7 +4,7 @@ import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.port.out.persistence.DeleteGroupPort
 import com.maitre.menuservice.domain.group.port.out.persistence.GetGroupByIdPort
-import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductByGroupIdPort
+import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductsByGroupIdPort
 import com.maitre.menuservice.exception.GroupNotFoundException
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
@@ -16,9 +16,9 @@ class DeleteGroupUseCaseTest{
    private val logger: Logger = mock()
     private val getGroupByIdPort: GetGroupByIdPort = mock()
     private val deleteGroupPort: DeleteGroupPort = mock()
-    private val deleteProductByGroupIdPort: DeleteProductByGroupIdPort = mock()
+    private val deleteProductsByGroupIdPort: DeleteProductsByGroupIdPort = mock()
 
-    private val deleteGroupUseCase =  DeleteGroupUseCase(logger, getGroupByIdPort, deleteGroupPort, deleteProductByGroupIdPort)
+    private val deleteGroupUseCase =  DeleteGroupUseCase(logger, getGroupByIdPort, deleteGroupPort, deleteProductsByGroupIdPort)
 
     @Test
     fun `Test Delete Group Use Case - verify if ports is being called`() {
@@ -28,7 +28,7 @@ class DeleteGroupUseCaseTest{
 
         verify(getGroupByIdPort, times(1)).getById(any<String>())
         verify(deleteGroupPort, times(1)).delete(any<String>())
-        verify(deleteProductByGroupIdPort, times(1)).deleteByGroupId(any<String>())
+        verify(deleteProductsByGroupIdPort, times(1)).deleteByGroupId(any<String>())
 
     }
 
@@ -51,14 +51,14 @@ class DeleteGroupUseCaseTest{
     private fun givenSomeCorrectPorts() {
         whenever(getGroupByIdPort.getById(any<String>())).thenReturn(Mono.just(group))
         whenever(deleteGroupPort.delete(any<String>())).thenReturn(Mono.empty())
-        whenever(deleteProductByGroupIdPort.deleteByGroupId(any<String>())).thenReturn(Mono.empty())
+        whenever(deleteProductsByGroupIdPort.deleteByGroupId(any<String>())).thenReturn(Mono.empty())
 
     }
 
     private fun givenSomeNonExistentGroup() {
         whenever(getGroupByIdPort.getById(any<String>())).thenReturn(Mono.empty())
         whenever(deleteGroupPort.delete(any<String>())).thenReturn(Mono.empty())
-        whenever(deleteProductByGroupIdPort.deleteByGroupId(any<String>())).thenReturn(Mono.empty())
+        whenever(deleteProductsByGroupIdPort.deleteByGroupId(any<String>())).thenReturn(Mono.empty())
     }
 
     private fun whenUseCaseIsExecuted() =
