@@ -1,7 +1,6 @@
-package com.maitre.menuservice.adapter.menu.`in`.create
+package com.maitre.menuservice.adapter.group.`in`.update
 
 import com.maitre.menuservice.adapter.group.`in`.dto.GroupRequestDTO
-import com.maitre.menuservice.adapter.group.`in`.update.UpdateGroupHandler
 import com.maitre.menuservice.domain.group.usecases.UpdateGroupUseCase
 import com.maitre.menuservice.utils.toDomain
 import com.maitre.menuservice.utils.toJson

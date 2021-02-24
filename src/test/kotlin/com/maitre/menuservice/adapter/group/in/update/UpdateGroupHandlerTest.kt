@@ -1,7 +1,6 @@
 package com.maitre.menuservice.adapter.group.`in`.update
 
 import com.maitre.menuservice.adapter.group.`in`.dto.GroupRequestDTO
-import com.maitre.menuservice.adapter.menu.`in`.create.UpdateGroupHandlerImpl
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.usecases.UpdateGroupUseCase
