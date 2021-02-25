@@ -1,7 +1,7 @@
 package com.maitre.menuservice.domain.product.usecase
 
 import com.maitre.menuservice.domain.product.entity.Product
-import com.maitre.menuservice.domain.product.port.out.persistence.GetProductPort
+import com.maitre.menuservice.domain.product.port.out.persistence.GetProductByIdPort
 import com.maitre.menuservice.exception.ProductNotFoundException
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
@@ -14,8 +14,8 @@ import java.math.BigDecimal
 class GetProductUseCaseTest{
 
     private val logger: Logger = mock()
-    private val getProductPort: GetProductPort = mock()
-    private val getProductsByGroupUseCase = GetProductUseCase(logger, getProductPort)
+    private val getProductByIdPort: GetProductByIdPort = mock()
+    private val getProductsByGroupUseCase = GetProductUseCase(logger, getProductByIdPort)
 
     @Test
     fun `Test Get Product id Use Case - verify if get port is being called`() {
@@ -23,7 +23,7 @@ class GetProductUseCaseTest{
 
         whenUseCaseIsExecuted()
 
-        verify(getProductPort, times(1)).get(any<String>())
+        verify(getProductByIdPort, times(1)).getById(any<String>())
     }
 
 
@@ -48,10 +48,10 @@ class GetProductUseCaseTest{
     private fun whenUseCaseIsExecuted() = getProductsByGroupUseCase.execute("PROD_62469e0a-fee6-4f3b-8892-8c9cc4901808")
 
     private fun givenSomeCorrectPort() {
-        whenever(getProductPort.get(any<String>())).thenReturn(Mono.just(product))
+        whenever(getProductByIdPort.getById(any<String>())).thenReturn(Mono.just(product))
     }
     private fun givenSomeNonExistentProduct() {
-        whenever(getProductPort.get(any<String>())).thenReturn(Mono.empty())
+        whenever(getProductByIdPort.getById(any<String>())).thenReturn(Mono.empty())
     }
 
     private val product = Product(
