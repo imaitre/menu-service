@@ -11,11 +11,11 @@ import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class ProductRouter(
-    private val createProductHandler: CreateProductHandler,
     private val getProductHandler: GetProductHandler,
     private val getProductsByGroupHandler: GetProductsByGroupHandler,
-    private val deleteProductHandler: DeleteProductHandler,
-    private val updateProductHandler: UpdateProductHandler
+    private val createProductHandler: CreateProductHandler,
+    private val updateProductHandler: UpdateProductHandler,
+    private val deleteProductHandler: DeleteProductHandler
 ) {
 
     @Bean

@@ -8,7 +8,7 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 
 > GET /menu/{id}
 
-> __TO-DO:__ GET /menu?customer_id={id}
+> GET /menu?customer_id={id}
 
 > POST /menu
 
@@ -31,7 +31,7 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 
 ### group
 
-> __TO-DO:__ GET /group/{id}
+> GET /group/{id}
 
 > GET /group?menu_id={id}
 

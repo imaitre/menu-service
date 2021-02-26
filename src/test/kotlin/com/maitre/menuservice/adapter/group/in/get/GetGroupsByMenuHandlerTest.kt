@@ -18,11 +18,11 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import reactor.core.publisher.Flux
 import reactor.test.StepVerifier
 
-class GetGroupHandlerTest{
+class GetGroupsByMenuHandlerTest{
 
     private val logger: Logger = mock()
     private val getGroupsByMenuIdUseCase: GetGroupsByMenuIdUseCase = mock()
-    private val getGroupHandler = GetGroupHandlerImpl(logger, getGroupsByMenuIdUseCase)
+    private val getGroupHandler = GetGroupsByMenuHandlerImpl(logger, getGroupsByMenuIdUseCase)
     private val serverRequest: ServerRequest = mock()
 
 

@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
-class GetGroupIntegrationTest {
+class GetGroupsByMenuIntegrationTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient

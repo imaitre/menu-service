@@ -11,9 +11,9 @@ import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class MenuRouter(
-    private val createMenuHandler: CreateMenuHandler,
     private val getMenuHandler: GetMenuHandler,
     private val getMenusByCustomerHandler: GetMenusByCustomerHandler,
+    private val createMenuHandler: CreateMenuHandler,
     private val updateMenuHandler: UpdateMenuHandler,
     private val deleteMenuHandler: DeleteMenuHandler
 ) {
