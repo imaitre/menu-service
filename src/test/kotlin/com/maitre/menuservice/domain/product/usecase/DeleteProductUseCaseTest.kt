@@ -2,7 +2,7 @@ package com.maitre.menuservice.domain.product.usecase
 
 import com.maitre.menuservice.domain.product.entity.Product
 import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductPort
-import com.maitre.menuservice.domain.product.port.out.persistence.GetProductPort
+import com.maitre.menuservice.domain.product.port.out.persistence.GetProductByIdPort
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
@@ -12,10 +12,10 @@ import java.math.BigDecimal
 
 class DeleteProductUseCaseTest{
     private val logger: Logger = mock()
-    private val getProductPort: GetProductPort = mock()
+    private val getProductByIdPort: GetProductByIdPort = mock()
     private val deleteProductPort: DeleteProductPort = mock()
 
-    private val deleteProductUseCase = DeleteProductUseCase(logger, getProductPort, deleteProductPort)
+    private val deleteProductUseCase = DeleteProductUseCase(logger, getProductByIdPort, deleteProductPort)
 
 
     @Test
@@ -26,7 +26,7 @@ class DeleteProductUseCaseTest{
             .expectNextCount(0)
             .verifyComplete()
 
-        verify(getProductPort, times(1)).get(any<String>())
+        verify(getProductByIdPort, times(1)).getById(any<String>())
         verify(deleteProductPort, times(1)).delete(any<String>())
     }
 
@@ -43,7 +43,7 @@ class DeleteProductUseCaseTest{
 
 
     private fun givenSomeCorrectPorts() {
-        whenever(getProductPort.get(any<String>())).thenReturn(Mono.just(product))
+        whenever(getProductByIdPort.getById(any<String>())).thenReturn(Mono.just(product))
         whenever(deleteProductPort.delete(any<String>())).thenReturn(Mono.empty())
     }
 
