@@ -1,7 +1,8 @@
-package com.maitre.menuservice.adapter.menu.`in`.get
+package com.maitre.menuservice.adapter.group.`in`.get
 
-import com.maitre.menuservice.domain.menu.entity.Menu
-import com.maitre.menuservice.domain.menu.usecases.GetMenuUseCase
+import com.maitre.menuservice.domain.group.entity.Group
+import com.maitre.menuservice.domain.group.entity.GroupType
+import com.maitre.menuservice.domain.group.usecases.GetGroupUseCase
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
@@ -15,15 +16,15 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import reactor.kotlin.core.publisher.toMono
 import reactor.test.StepVerifier
 
-class GetMenuHandlerTest {
+class GetGroupHandlerTest {
 
     private val logger: Logger = mock()
-    private val getMenuUseCase: GetMenuUseCase = mock()
-    private val getMenuHandler = GetMenuHandlerImpl(logger, getMenuUseCase)
+    private val getGroupUseCase: GetGroupUseCase = mock()
+    private val getGroupHandler = GetGroupHandlerImpl(logger, getGroupUseCase)
     private val serverRequest: ServerRequest = mock()
 
     @Test
-    fun `Test Get Menu Handler - verify status code and header`() {
+    fun `Test Get Group Handler - verify status code and header`() {
 
         givenSomeCorrectRequest()
 
@@ -35,20 +36,19 @@ class GetMenuHandlerTest {
                 Assertions.assertEquals(MediaType.APPLICATION_JSON, it.headers().contentType)
             }
             .block()
-
     }
 
     @Test
-    fun `Test Get Menu Handler - verify if use case is being called`() {
+    fun `Test Get Group Handler - verify if use case is being called`() {
         givenSomeCorrectRequest()
 
         whenHandlerIsExecuted().block()
 
-        verify(getMenuUseCase, times(1)).execute(any<String>())
+        verify(getGroupUseCase, times(1)).execute(any<String>())
     }
 
     @Test
-    fun `Test Get Menu Handler - verify if an event is emitted`() {
+    fun `Test Get Group Handler - verify if an event is emitted`() {
         givenSomeCorrectRequest()
 
         StepVerifier.create(whenHandlerIsExecuted())
@@ -57,18 +57,17 @@ class GetMenuHandlerTest {
     }
 
     private fun givenSomeCorrectRequest() {
-        whenever(serverRequest.pathVariable("id")).thenReturn("MENU_bc4743a8-1130-4127-a057-0aacc950a1e3")
-        whenever(getMenuUseCase.execute(any<String>())).thenReturn(menu)
+        whenever(serverRequest.pathVariable("id")).thenReturn("GROU_f31415c2-87eb-41aa-8f7f-9344949cbd20")
+        whenever(getGroupUseCase.execute(any<String>())).thenReturn(group)
     }
 
-    private fun whenHandlerIsExecuted() =
-        getMenuHandler.execute(serverRequest)
+    private fun whenHandlerIsExecuted() = getGroupHandler.execute(serverRequest)
 
-    private val menu = Menu(
-        "MENU_bc4743a8-1130-4127-a057-0aacc950a1e3",
-        "CUST_0c6e1cb0-df2e-414a-98fb-73b2b8ce6b63",
-        "Menu de segunda-feira",
-        "Menu da segunda-feira pra iniciar a semana fininho.",
-        true
-    ).toMono()
+    private val group = Group(
+        "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
+        "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
+        "Ice Cream",
+        "delicious ice cream",
+        GroupType.ICE_CREAM,
+        true).toMono()
 }

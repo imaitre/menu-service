@@ -23,7 +23,7 @@ class GetMenuByCustomerIntegrationTest {
     @Test
     fun `Should get menus by customer_id`() {
 
-        givenGroupSavedInDatabase()
+        givenMenusSavedInDatabase()
 
         webTestClient
             .get()
@@ -48,7 +48,7 @@ class GetMenuByCustomerIntegrationTest {
             .jsonPath("$.error_messages[*].description").isEqualTo("Menu not found. id=123a")
     }
 
-    private fun givenGroupSavedInDatabase(){
+    private fun givenMenusSavedInDatabase(){
         val menuEntity1 = MenuEntity(
             "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
             "CUST_0c6e1cb0-df2e-414a-98fb-73b2b8ce6b62",
