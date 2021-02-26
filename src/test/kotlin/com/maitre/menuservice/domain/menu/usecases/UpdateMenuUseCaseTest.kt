@@ -1,7 +1,7 @@
 package com.maitre.menuservice.domain.menu.usecases
 
 import com.maitre.menuservice.domain.menu.entity.Menu
-import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuPort
+import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuByIdPort
 import com.maitre.menuservice.domain.menu.port.out.persistence.SaveMenuPort
 import com.maitre.menuservice.exception.MenuNotFoundException
 import com.nhaarman.mockitokotlin2.any
@@ -18,8 +18,8 @@ class UpdateMenuUseCaseTest {
 
     private val logger: Logger = mock()
     private val saveMenuPort: SaveMenuPort = mock()
-    private val getMenuPort: GetMenuPort = mock()
-    private val updateMenuUseCase = UpdateMenuUseCase(logger,saveMenuPort, getMenuPort)
+    private val getMenuByIdPort: GetMenuByIdPort = mock()
+    private val updateMenuUseCase = UpdateMenuUseCase(logger,saveMenuPort, getMenuByIdPort)
 
     @Test
     fun `Test Update Menu Use Case - verify if ports are being called`() {
@@ -27,7 +27,7 @@ class UpdateMenuUseCaseTest {
 
         whenUseCaseIsExecuted()
 
-        verify(getMenuPort, times(1)).get(any<String>())
+        verify(getMenuByIdPort, times(1)).getById(any<String>())
         verify(saveMenuPort, times(1)).save(any<Menu>())
 
     }
@@ -42,12 +42,12 @@ class UpdateMenuUseCaseTest {
     }
 
     private fun givenSomeCorrectPorts() {
-        whenever(getMenuPort.get(any<String>())).thenReturn(Mono.just(menu))
+        whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.just(menu))
         whenever(saveMenuPort.save(any<Menu>())).thenReturn(Mono.just(menu))
     }
 
     private fun givenSomeNonExistentMenu() {
-        whenever(getMenuPort.get(any<String>())).thenReturn(Mono.empty())
+        whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.empty())
         whenever(saveMenuPort.save(any<Menu>())).thenReturn(Mono.empty())
 
     }

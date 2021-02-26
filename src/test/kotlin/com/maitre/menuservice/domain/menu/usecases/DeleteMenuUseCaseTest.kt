@@ -2,12 +2,12 @@ package com.maitre.menuservice.domain.menu.usecases
 
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
-import com.maitre.menuservice.domain.group.port.out.persistence.DeleteGroupByMenuIdPort
+import com.maitre.menuservice.domain.group.port.out.persistence.DeleteGroupsByMenuIdPort
 import com.maitre.menuservice.domain.group.port.out.persistence.GetGroupsByMenuIdPort
 import com.maitre.menuservice.domain.menu.entity.Menu
 import com.maitre.menuservice.domain.menu.port.out.persistence.DeleteMenuPort
 import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuByIdPort
-import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductByGroupIdPort
+import com.maitre.menuservice.domain.product.port.out.persistence.DeleteProductsByGroupIdPort
 import com.maitre.menuservice.exception.MenuNotFoundException
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -25,10 +25,10 @@ class DeleteMenuUseCaseTest {
     private val logger: Logger = mock()
     private val getMenuByIdPort: GetMenuByIdPort= mock()
     private val deleteMenuPort: DeleteMenuPort= mock()
-    private val deleteGroupByMenuIdPort: DeleteGroupByMenuIdPort = mock()
+    private val deleteGroupsByMenuIdPort: DeleteGroupsByMenuIdPort = mock()
     private val getGroupsByMenuIdPort: GetGroupsByMenuIdPort = mock()
-    private val deleteProductByGroupIdPort: DeleteProductByGroupIdPort = mock()
-    private val deleteMenuUseCase = DeleteMenuUseCase(logger, getMenuByIdPort, deleteMenuPort, deleteGroupByMenuIdPort, getGroupsByMenuIdPort, deleteProductByGroupIdPort)
+    private val deleteProductsByGroupIdPort: DeleteProductsByGroupIdPort = mock()
+    private val deleteMenuUseCase = DeleteMenuUseCase(logger, getMenuByIdPort, deleteMenuPort, deleteGroupsByMenuIdPort, getGroupsByMenuIdPort, deleteProductsByGroupIdPort)
 
     @Test
     fun `Test Delete Menu Use Case - verify if ports are being called`() {
@@ -37,7 +37,7 @@ class DeleteMenuUseCaseTest {
         whenUseCaseIsExecuted()
 
         verify(getMenuByIdPort, times(1)).getById(any<String>())
-        verify(deleteGroupByMenuIdPort, times(1)).deleteByMenuId(any<String>())
+        verify(deleteGroupsByMenuIdPort, times(1)).deleteByMenuId(any<String>())
         verify(deleteMenuPort, times(1)).delete(any<String>())
 
     }
@@ -64,15 +64,15 @@ class DeleteMenuUseCaseTest {
         whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.just(menu))
         whenever(getGroupsByMenuIdPort.getByMenuId(any<String>())).thenReturn(Flux.just(group1, group2))
         whenever(deleteMenuPort.delete(any<String>())).thenReturn(Mono.empty())
-        whenever(deleteGroupByMenuIdPort.deleteByMenuId(any<String>())).thenReturn(Mono.empty())
-        whenever(deleteProductByGroupIdPort.deleteByGroupId(any<String>())).thenReturn(Mono.empty())
+        whenever(deleteGroupsByMenuIdPort.deleteByMenuId(any<String>())).thenReturn(Mono.empty())
+        whenever(deleteProductsByGroupIdPort.deleteByGroupId(any<String>())).thenReturn(Mono.empty())
 
     }
 
     private fun givenSomeNonExistentProduct() {
         whenever(getMenuByIdPort.getById(any<String>())).thenReturn(Mono.empty())
         whenever(deleteMenuPort.delete(any<String>())).thenReturn(Mono.empty())
-        whenever(deleteGroupByMenuIdPort.deleteByMenuId(any<String>())).thenReturn(Mono.empty())
+        whenever(deleteGroupsByMenuIdPort.deleteByMenuId(any<String>())).thenReturn(Mono.empty())
     }
 
     private fun whenUseCaseIsExecuted() =

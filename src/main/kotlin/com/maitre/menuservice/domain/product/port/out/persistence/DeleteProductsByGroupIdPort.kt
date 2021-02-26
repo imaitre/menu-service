@@ -2,6 +2,6 @@ package com.maitre.menuservice.domain.product.port.out.persistence
 
 import reactor.core.publisher.Mono
 
-interface DeleteProductByGroupIdPort {
+interface DeleteProductsByGroupIdPort {
     fun deleteByGroupId(id: String) : Mono<Void>
 }

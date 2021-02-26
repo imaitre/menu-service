@@ -1,7 +1,7 @@
 package com.maitre.menuservice.domain.product.usecase
 
 import com.maitre.menuservice.domain.product.entity.Product
-import com.maitre.menuservice.domain.product.port.out.persistence.GetProductByGroupPort
+import com.maitre.menuservice.domain.product.port.out.persistence.GetProductsByGroupPort
 import com.maitre.menuservice.exception.ProductNotFoundException
 import com.nhaarman.mockitokotlin2.*
 import org.junit.jupiter.api.Test
@@ -12,10 +12,10 @@ import java.math.BigDecimal
 
 class GetProductsByGroupUseCaseTest{
     private val logger: Logger = mock()
-    private val getProductByGroupPort: GetProductByGroupPort = mock()
+    private val getProductsByGroupPort: GetProductsByGroupPort = mock()
 
 
-    private val getProductsByGroupUseCase = GetProductsByGroupUseCase(logger, getProductByGroupPort)
+    private val getProductsByGroupUseCase = GetProductsByGroupUseCase(logger, getProductsByGroupPort)
 
     @Test
     fun `Test Get Products by group Use Case - verify if get port is being called`() {
@@ -23,7 +23,7 @@ class GetProductsByGroupUseCaseTest{
 
         whenUseCaseIsExecuted()
 
-        verify(getProductByGroupPort, times(1)).getByGroup(any<String>())
+        verify(getProductsByGroupPort, times(1)).getByGroup(any<String>())
     }
 
 
@@ -50,10 +50,10 @@ class GetProductsByGroupUseCaseTest{
     private fun whenUseCaseIsExecuted() = getProductsByGroupUseCase.execute("PROD_62469e0a-fee6-4f3b-8892-8c9cc4901808")
 
     private fun givenSomeCorrectPort() {
-        whenever(getProductByGroupPort.getByGroup(any<String>())).thenReturn(Flux.just(product))
+        whenever(getProductsByGroupPort.getByGroup(any<String>())).thenReturn(Flux.just(product))
     }
     private fun givenSomeNonExistentProduct() {
-        whenever(getProductByGroupPort.getByGroup(any<String>())).thenReturn(Flux.empty())
+        whenever(getProductsByGroupPort.getByGroup(any<String>())).thenReturn(Flux.empty())
     }
 
     private val product = Product(
