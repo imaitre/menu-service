@@ -3,6 +3,7 @@ package com.maitre.menuservice.adapter.group.`in`.get
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
 import com.maitre.menuservice.exception.MissingParameterException
+import com.maitre.menuservice.utils.Constants.MENU_ID
 import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -22,10 +23,10 @@ class GetGroupHandlerImpl(
         logger.info(
                 "Get groups by menu_id Request initiated. " +
                         "method=${serverRequest.method()}, path=${serverRequest.path()}, " +
-                        "headers=${serverRequest.headers()}, menu_id=${serverRequest.queryParam("menu_id")}")
+                        "headers=${serverRequest.headers()}, menu_id=${serverRequest.queryParam(MENU_ID)}")
 
-        val groups = getGroupsByMenuIdUseCase.execute(serverRequest.queryParam("menu_id")
-                .orElseThrow{ MissingParameterException("menu_id") })
+        val groups = getGroupsByMenuIdUseCase.execute(serverRequest.queryParam(MENU_ID)
+                .orElseThrow{ MissingParameterException(MENU_ID) })
 
         return ok()
                 .contentType(MediaType.TEXT_EVENT_STREAM)

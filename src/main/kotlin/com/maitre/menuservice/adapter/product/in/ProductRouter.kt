@@ -20,11 +20,11 @@ class ProductRouter(
 
     @Bean
     fun productRoutes() = router {
-        POST("/product", createProductHandler::execute)
         GET("/product/{id}", getProductHandler::execute)
         GET("/product", getProductsByGroupHandler::execute)
-        DELETE("/product/{id}", deleteProductHandler::execute)
+        POST("/product", createProductHandler::execute)
         PUT("/product/{id}", updateProductHandler::execute)
+        DELETE("/product/{id}", deleteProductHandler::execute)
     }
 
 }

@@ -20,9 +20,9 @@ class GroupRouter(
 
     @Bean
     fun groupRoutes() = router {
-        POST("/group", createGroupHandler::execute)
         GET("/group", getGroupHandler::execute)
-        DELETE("/group/{id}", deleteGroupHandler::execute)
+        POST("/group", createGroupHandler::execute)
         PUT("/group/{id}", updateGroupHandler::execute)
+        DELETE("/group/{id}", deleteGroupHandler::execute)
     }
 }
