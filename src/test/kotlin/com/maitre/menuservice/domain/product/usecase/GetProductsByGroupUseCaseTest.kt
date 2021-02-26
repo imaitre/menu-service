@@ -11,10 +11,9 @@ import reactor.test.StepVerifier
 import java.math.BigDecimal
 
 class GetProductsByGroupUseCaseTest{
+
     private val logger: Logger = mock()
     private val getProductsByGroupPort: GetProductsByGroupPort = mock()
-
-
     private val getProductsByGroupUseCase = GetProductsByGroupUseCase(logger, getProductsByGroupPort)
 
     @Test
@@ -52,6 +51,7 @@ class GetProductsByGroupUseCaseTest{
     private fun givenSomeCorrectPort() {
         whenever(getProductsByGroupPort.getByGroup(any<String>())).thenReturn(Flux.just(product))
     }
+
     private fun givenSomeNonExistentProduct() {
         whenever(getProductsByGroupPort.getByGroup(any<String>())).thenReturn(Flux.empty())
     }

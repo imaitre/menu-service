@@ -15,8 +15,10 @@ import reactor.core.publisher.Mono
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
 class GetGroupIntegrationTest {
+
     @Autowired
     lateinit var webTestClient: WebTestClient
+
     @Autowired
     lateinit var groupRepository: GroupRepository
 

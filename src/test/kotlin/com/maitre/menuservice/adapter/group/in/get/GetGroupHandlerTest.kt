@@ -3,6 +3,7 @@ package com.maitre.menuservice.adapter.group.`in`.get
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
 import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
+import com.maitre.menuservice.utils.Constants.MENU_ID
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
@@ -61,7 +62,7 @@ class GetGroupHandlerTest{
     private fun whenHandlerIsExecuted() = getGroupHandler.execute(serverRequest)
 
     private fun givenSomeCorrectRequest() {
-        whenever(serverRequest.queryParam("menu_id")).thenReturn(Optional.of("MENU_af60830b-d190-43bf-afcb-f5cc2656ea25"))
+        whenever(serverRequest.queryParam(MENU_ID)).thenReturn(Optional.of("MENU_af60830b-d190-43bf-afcb-f5cc2656ea25"))
         whenever(getGroupsByMenuIdUseCase.execute(any<String>())).thenReturn(Flux.just(group))
     }
 
