@@ -11,20 +11,20 @@ import org.springframework.web.reactive.function.server.router
 
 @Configuration
 class ProductRouter(
-    private val createProductHandler: CreateProductHandler,
     private val getProductHandler: GetProductHandler,
     private val getProductsByGroupHandler: GetProductsByGroupHandler,
-    private val deleteProductHandler: DeleteProductHandler,
-    private val updateProductHandler: UpdateProductHandler
+    private val createProductHandler: CreateProductHandler,
+    private val updateProductHandler: UpdateProductHandler,
+    private val deleteProductHandler: DeleteProductHandler
 ) {
 
     @Bean
     fun productRoutes() = router {
-        POST("/product", createProductHandler::execute)
         GET("/product/{id}", getProductHandler::execute)
         GET("/product", getProductsByGroupHandler::execute)
-        DELETE("/product/{id}", deleteProductHandler::execute)
+        POST("/product", createProductHandler::execute)
         PUT("/product/{id}", updateProductHandler::execute)
+        DELETE("/product/{id}", deleteProductHandler::execute)
     }
 
 }

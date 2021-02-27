@@ -6,63 +6,69 @@ import com.maitre.menuservice.domain.group.entity.GroupType
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit.jupiter.EnabledIf
 import org.springframework.test.web.reactive.server.WebTestClient
-import reactor.core.publisher.Mono
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @EnabledIf(expression = "#{environment['spring.profiles.active'] == 'test'}")
 class GetGroupIntegrationTest {
+
     @Autowired
     lateinit var webTestClient: WebTestClient
+
     @Autowired
-    lateinit var groupRepository: GroupRepository
+    private lateinit var groupRepository: GroupRepository
 
     @Test
-    fun `Should get a groups by menu_id`() {
-        givenGroupSavedInDatabase().map{
-            webTestClient
-                .get()
-                .uri("/group?menu_id=${it.menuId}")
-                .exchange()
-                .expectStatus().isOk
-                .expectBody()
-                .jsonPath("$.id").exists()
-                .jsonPath("$.menu_id").isEqualTo(it.id)
-                .jsonPath("$.name").isEqualTo("Ice Cream")
-                .jsonPath("$.description").isEqualTo("delicious ice cream")
-                .jsonPath("$.type").isEqualTo(GroupType.ICE_CREAM.name)
-                .jsonPath("$.available").isEqualTo(true)
+    fun `Should get a group`() {
+        givenGroupSavedInDatabase()
 
-        }
-
+        webTestClient
+            .get()
+            .uri("/group/GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .jsonPath("$.id").isEqualTo("GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3")
+            .jsonPath("$.menu_id").isEqualTo("MENU_af60830b-d190-43bf-afcb-f5cc2656ea25")
+            .jsonPath("$.name").isEqualTo("Ice Cream")
+            .jsonPath("$.description").isEqualTo("delicious ice cream")
+            .jsonPath("$.type").isEqualTo("ICE_CREAM")
+            .jsonPath("$.available").isEqualTo(true)
     }
 
     @Test
     fun `Should respond 404 NOT_FOUND if menu is not found`() {
+
+        givenGroupNotExistentInDatabase()
+
         webTestClient
-                .get()
-                .uri("/group?menu_id=123a")
-                .exchange()
-                .expectStatus().isNotFound
-                .expectBody()
-                .jsonPath("$.error_messages").isArray
-                .jsonPath("$.error_messages.length()").isEqualTo(1)
-                .jsonPath("$.error_messages[*].description").isEqualTo("Group not found. id=123a")
+            .get()
+            .uri("/group/MENU_af60830b-d190-43bf-afcb-f5cc2656ea26")
+            .exchange()
+            .expectStatus().isNotFound
+            .expectBody()
+            .jsonPath("$.error_messages").isArray
+            .jsonPath("$.error_messages.length()").isEqualTo(1)
+            .jsonPath("$.error_messages[*].description")
+            .isEqualTo("Group not found. id=MENU_af60830b-d190-43bf-afcb-f5cc2656ea26")
+
     }
 
-
-    private fun givenGroupSavedInDatabase(): Mono<GroupEntity> {
-        val group = GroupEntity(
+    private fun givenGroupSavedInDatabase(){
+        val groupEntity = GroupEntity(
             "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
             "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
             "Ice Cream",
             "delicious ice cream",
             GroupType.ICE_CREAM,
-            true)
-        return groupRepository.save(group)
+            true
+        )
+        groupRepository.save(groupEntity).block()
+    }
+
+    private fun givenGroupNotExistentInDatabase(){
+        groupRepository.deleteById("GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3").block()
     }
 
 }

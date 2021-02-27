@@ -6,15 +6,15 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 
 ### menu
 
-> POST /menu
-
 > GET /menu/{id}
 
-> GET /menu?customerId={id}
+> GET /menu?customer_id={id}
 
-> __TO-DO:__ PATCH /menu/{id}
+> POST /menu
 
-> __TO-DO:__ DELETE /menu/{id}
+> PUT /menu/{id}
+
+> DELETE /menu/{id}
 
 (delete is a cascade process)
 
@@ -31,13 +31,13 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 
 ### group
 
+> GET /group/{id}
+
+> GET /group?menu_id={id}
+
 > POST /group
 
-> POST /group/{id}
-
-> POST /group?menuId={id}
-
-> __TO-DO:__ PATCH /group/{id}
+> PATCH /group/{id}
 
 > DELETE /group/{id}
 
@@ -57,15 +57,15 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 
 ### product
 
+> GET /product/{id}
+
+> GET /product?group_id={id}
+
 > POST /product
 
-> POST /product/{id}
+> PUT /product/{id}
 
-> POST /product?groupId={id}
-
-> __TO-DO:__ PATCH /product/{id}
-
-> __TO-DO:__ DELETE /product/{id}
+> DELETE /product/{id}
 
 ```java
 {

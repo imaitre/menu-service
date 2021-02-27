@@ -2,40 +2,42 @@ package com.maitre.menuservice.adapter.group.`in`.get
 
 import com.maitre.menuservice.domain.group.entity.Group
 import com.maitre.menuservice.domain.group.entity.GroupType
-import com.maitre.menuservice.domain.group.usecases.GetGroupUseCase
+import com.maitre.menuservice.domain.group.usecases.GetGroupsByMenuIdUseCase
+import com.maitre.menuservice.utils.Constants.MENU_ID
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import java.util.Optional
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerRequest
-import reactor.kotlin.core.publisher.toMono
+import reactor.core.publisher.Flux
 import reactor.test.StepVerifier
 
-class GetGroupHandlerTest {
+class GetGroupsByMenuHandlerTest{
 
     private val logger: Logger = mock()
-    private val getGroupUseCase: GetGroupUseCase = mock()
-    private val getGroupHandler = GetGroupHandlerImpl(logger, getGroupUseCase)
+    private val getGroupsByMenuIdUseCase: GetGroupsByMenuIdUseCase = mock()
+    private val getGroupHandler = GetGroupsByMenuHandlerImpl(logger, getGroupsByMenuIdUseCase)
     private val serverRequest: ServerRequest = mock()
+
 
     @Test
     fun `Test Get Group Handler - verify status code and header`() {
-
         givenSomeCorrectRequest()
 
         whenHandlerIsExecuted()
-            .map {
-                Assertions.assertEquals(
-                    200, it.rawStatusCode()
-                )
-                Assertions.assertEquals(MediaType.APPLICATION_JSON, it.headers().contentType)
-            }
-            .block()
+                .map {
+                    Assertions.assertEquals(
+                            200, it.rawStatusCode()
+                    )
+                    Assertions.assertEquals(MediaType.TEXT_EVENT_STREAM, it.headers().contentType)
+                }
+                .block()
     }
 
     @Test
@@ -44,7 +46,7 @@ class GetGroupHandlerTest {
 
         whenHandlerIsExecuted().block()
 
-        verify(getGroupUseCase, times(1)).execute(any<String>())
+        verify(getGroupsByMenuIdUseCase, times(1)).execute(any<String>())
     }
 
     @Test
@@ -52,22 +54,23 @@ class GetGroupHandlerTest {
         givenSomeCorrectRequest()
 
         StepVerifier.create(whenHandlerIsExecuted())
-            .expectNextCount(1)
-            .verifyComplete()
+                .expectNextCount(1)
+                .verifyComplete()
     }
 
-    private fun givenSomeCorrectRequest() {
-        whenever(serverRequest.pathVariable("id")).thenReturn("GROU_f31415c2-87eb-41aa-8f7f-9344949cbd20")
-        whenever(getGroupUseCase.execute(any<String>())).thenReturn(group)
-    }
 
     private fun whenHandlerIsExecuted() = getGroupHandler.execute(serverRequest)
 
+    private fun givenSomeCorrectRequest() {
+        whenever(serverRequest.queryParam(MENU_ID)).thenReturn(Optional.of("MENU_af60830b-d190-43bf-afcb-f5cc2656ea25"))
+        whenever(getGroupsByMenuIdUseCase.execute(any<String>())).thenReturn(Flux.just(group))
+    }
+
     private val group = Group(
-        "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
-        "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
-        "Ice Cream",
-        "delicious ice cream",
-        GroupType.ICE_CREAM,
-        true).toMono()
+            "GRUO_bc4743a8-1130-4127-a057-0aacc950a1e3",
+            "MENU_af60830b-d190-43bf-afcb-f5cc2656ea25",
+            "Ice Cream",
+            "delicious ice cream",
+            GroupType.ICE_CREAM,
+            true)
 }

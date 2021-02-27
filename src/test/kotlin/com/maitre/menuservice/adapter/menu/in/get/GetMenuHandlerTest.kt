@@ -48,7 +48,7 @@ class GetMenuHandlerTest {
     }
 
     @Test
-    fun `Test Create Menu Handler - verify if an event is emitted`() {
+    fun `Test Get Menu Handler - verify if an event is emitted`() {
         givenSomeCorrectRequest()
 
         StepVerifier.create(whenHandlerIsExecuted())

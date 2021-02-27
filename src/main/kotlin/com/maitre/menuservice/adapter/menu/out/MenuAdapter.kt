@@ -3,14 +3,16 @@ package com.maitre.menuservice.adapter.menu.out
 import com.maitre.menuservice.domain.menu.entity.Menu
 import com.maitre.menuservice.domain.menu.port.out.persistence.DeleteMenuPort
 import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenuByIdPort
+import com.maitre.menuservice.domain.menu.port.out.persistence.GetMenusByCustomerPort
 import com.maitre.menuservice.domain.menu.port.out.persistence.SaveMenuPort
 import com.maitre.menuservice.utils.toDomain
 import com.maitre.menuservice.utils.toEntity
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @Component
-class MenuAdapter(private val menuRepository: MenuRepository) : SaveMenuPort, GetMenuByIdPort, DeleteMenuPort {
+class MenuAdapter(private val menuRepository: MenuRepository) : SaveMenuPort, GetMenuByIdPort, DeleteMenuPort, GetMenusByCustomerPort {
 
     override fun save(menu: Menu): Mono<Menu> {
         return menuRepository.save(menu.toEntity())
@@ -24,6 +26,11 @@ class MenuAdapter(private val menuRepository: MenuRepository) : SaveMenuPort, Ge
 
     override fun delete(id: String): Mono<Void> {
         return menuRepository.deleteById(id)
+    }
+
+    override fun getByCustomerId(customerId: String): Flux<Menu> {
+        return menuRepository.findAllByCustomerId(customerId)
+            .map { it.toDomain() }
     }
 
 
