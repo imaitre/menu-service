@@ -77,12 +77,12 @@ The idea behind this app is to manage the necessities of a menu and its groups a
     "available": true,
     "addons": [
         {
-            optional_id: "OPTI_2125f0da-cd5b-4e41-87e9-0e76cb7ec40a",
-            available: true
+            "optional_id": "OPTI_2125f0da-cd5b-4e41-87e9-0e76cb7ec40a",
+            "available": true
         },
         {
-            optional_id: "OPTI_6525f0da-fgb-9e41-83f9-0e76cb7ec40a",
-            available: false
+            "optional_id": "OPTI_6525f0da-fgb-9e41-83f9-0e76cb7ec40a",
+            "available": false
         }
      ],
     "image_urls": [
