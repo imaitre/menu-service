@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.server.router
 
 @Configuration
-class OptionalRouter(private val createOptonalHandler: CreateOptonalHandler)
+class OptionalRouter(private val createOptionalHandler: CreateOptonalHandler)
 {
 
   @Bean
-  fun menuRoutes() = router {
-    POST("/optional", createOptonalHandler::execute)
+  fun optionalRoutes() = router {
+    POST("/optional", createOptionalHandler::execute)
   }
 }

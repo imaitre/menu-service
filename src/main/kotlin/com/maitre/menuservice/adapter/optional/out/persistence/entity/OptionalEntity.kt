@@ -12,7 +12,7 @@ data class OptionalEntity(
   val addons: List<AddOns>) {
 
   data class AddOns(
-    val id: String,
+    val id: String?,
     val name: String,
     val description: String?,
     val available: Boolean,

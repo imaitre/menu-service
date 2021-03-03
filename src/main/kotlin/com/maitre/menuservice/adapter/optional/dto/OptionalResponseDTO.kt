@@ -16,7 +16,7 @@ data class OptionalResponseDTO(
         val addons: List<AddOnsDTO>
 ) {
         data class AddOnsDTO(
-                val id: String,
+                val id: String?,
                 val name: String,
                 val description: String?,
                 val available: Boolean,
