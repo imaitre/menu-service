@@ -17,6 +17,7 @@ data class Optional(
   data class AddOns(
     val id: String?,
     val name: String,
+    val price: Double,
     val description: String?,
     val available: Boolean,
   )
