@@ -65,7 +65,7 @@ fun addOnsDTOtoDomain(addons: List<OptionalRequestDTO.AddOnsDTO>): List<Optional
             price = it.price,
             available= it.available
         )
-    }.toMutableList()
+    }.toList()
 }
 
 
@@ -78,7 +78,7 @@ fun addOnToDTO(addons: List<Optional.AddOns>): List<OptionalResponseDTO.AddOnsDT
             price = it.price,
             available= it.available
         )
-    }.toMutableList()
+    }.toList()
 }
 
 fun addOnToEntity(addons: List<Optional.AddOns>): List<OptionalEntity.AddOns>{
@@ -90,7 +90,7 @@ fun addOnToEntity(addons: List<Optional.AddOns>): List<OptionalEntity.AddOns>{
             price = it.price,
             available= it.available
         )
-    }.toMutableList()
+    }.toList()
 }
 
 fun addOnEntityToDomain(addons: List<OptionalEntity.AddOns>): List<Optional.AddOns>{
@@ -102,5 +102,5 @@ fun addOnEntityToDomain(addons: List<OptionalEntity.AddOns>): List<Optional.AddO
             price = it.price,
             available= it.available
         )
-    }.toMutableList()
+    }.toList()
 }
