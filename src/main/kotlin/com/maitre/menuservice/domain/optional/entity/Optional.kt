@@ -4,7 +4,7 @@ import java.util.*
 
 
 data class Optional(
-  val id: String = "OPTI_" + UUID.randomUUID(),
+  var id: String = "OPTI_" + UUID.randomUUID(),
   val menuId: String,
   val name: String,
   val description: String?,
