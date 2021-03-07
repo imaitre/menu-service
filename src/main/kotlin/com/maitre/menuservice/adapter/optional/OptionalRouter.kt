@@ -16,6 +16,5 @@ class OptionalRouter(
   fun optionalRoutes() = router {
     POST("/optional", createOptionalHandler::execute)
     GET("/optional", getOptionalsByMenuHandler::execute)
-
   }
 }
