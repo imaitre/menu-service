@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
 @Service
-class DeleteUpdateUseCase(private val logger: Logger,
-                          private val getOptionalByIdPort: GetOptionalByIdPort,
-                          private val deleteOptionalPort: DeleteOptionalPort
+class DeleteOptionalUseCase(private val logger: Logger,
+                            private val getOptionalByIdPort: GetOptionalByIdPort,
+                            private val deleteOptionalPort: DeleteOptionalPort
 ) {
 
     fun execute(id: String): Mono<Void>{
