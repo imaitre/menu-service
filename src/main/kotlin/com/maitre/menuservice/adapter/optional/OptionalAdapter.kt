@@ -2,6 +2,7 @@ package com.maitre.menuservice.adapter.optional
 
 import com.maitre.menuservice.adapter.optional.out.persistence.entity.OptionalRepository
 import com.maitre.menuservice.domain.optional.entity.Optional
+import com.maitre.menuservice.domain.optional.port.out.persistence.GetOptionalByIdPort
 import com.maitre.menuservice.domain.optional.port.out.persistence.GetOptionalsByMenuIdPort
 import com.maitre.menuservice.domain.optional.port.out.persistence.SaveOptionalPort
 import com.maitre.menuservice.utils.toDomain
@@ -12,7 +13,7 @@ import reactor.core.publisher.Mono
 
 
 @Component
-class OptionalAdapter(private val optionalRepository: OptionalRepository): SaveOptionalPort, GetOptionalsByMenuIdPort {
+class OptionalAdapter(private val optionalRepository: OptionalRepository): SaveOptionalPort, GetOptionalsByMenuIdPort, GetOptionalByIdPort{
 
   override fun save(optional: Optional): Mono<Optional> {
     return optionalRepository.save(optional.toEntity())
@@ -21,6 +22,11 @@ class OptionalAdapter(private val optionalRepository: OptionalRepository): SaveO
 
   override fun getByMenuId(menuId: String): Flux<Optional> {
     return optionalRepository.findAllByMenuId(menuId)
+      .map { it.toDomain() }
+  }
+
+  override fun getById(id: String): Mono<Optional> {
+    return optionalRepository.findById(id)
       .map { it.toDomain() }
   }
 }
