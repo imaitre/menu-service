@@ -6,7 +6,11 @@ import com.maitre.menuservice.domain.group.port.out.persistence.GetGroupByIdPort
 import com.maitre.menuservice.domain.product.entity.Product
 import com.maitre.menuservice.domain.product.port.out.persistence.SaveProductPort
 import com.maitre.menuservice.exception.GroupNotFoundException
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import reactor.core.publisher.Mono
@@ -71,10 +75,9 @@ class CreateProductUseCaseTest {
         BigDecimal(29.99),
         false,
         true,
-        mapOf(
-            "Bisteca extra" to BigDecimal(4.99),
-            "Linguiça extra" to BigDecimal(2.99),
-            "Ovo frito" to BigDecimal(1.99)
+        listOf(
+            "OPTI_bc4743a8-1130-4127-a057-0aacc950a1e3",
+            "OPTI_bc4743a8-1130-4127-a057-0aacc950a1e3"
         ),
         listOf(
             "https://amp.receitadevovo.com.br/wp-content/uploads/2020/10/virado-paulista.jpg",

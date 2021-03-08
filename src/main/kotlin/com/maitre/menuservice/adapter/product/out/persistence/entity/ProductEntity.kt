@@ -1,8 +1,8 @@
 package com.maitre.menuservice.adapter.product.out.persistence.entity
 
-import java.math.BigDecimal
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.math.BigDecimal
 
 @Document("product")
 data class ProductEntity(
@@ -14,6 +14,6 @@ data class ProductEntity(
     val amount: BigDecimal,
     val adultsOnly: Boolean,
     val available: Boolean,
-    val addons: Map<String, BigDecimal>?,
+    val addons: List<String>?,
     val imageUrls: List<String>?
 )

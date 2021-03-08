@@ -66,10 +66,9 @@ class UpdateProductUseCaseTest {
         BigDecimal(29.99),
         false,
         true,
-        mapOf(
-            "Bisteca extra" to BigDecimal(4.99),
-            "Linguiça extra" to BigDecimal(2.99),
-            "Ovo frito" to BigDecimal(1.99)
+        listOf(
+            "OPTI_bc4743a8-1130-4127-a057-0aacc950a1e3",
+            "OPTI_bc4743a8-1130-4127-a057-0aacc950a1e3"
         ),
         listOf(
             "https://amp.receitadevovo.com.br/wp-content/uploads/2020/10/virado-paulista.jpg",
