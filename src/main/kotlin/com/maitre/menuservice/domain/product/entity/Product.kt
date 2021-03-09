@@ -1,7 +1,7 @@
 package com.maitre.menuservice.domain.product.entity
 
 import java.math.BigDecimal
-import java.util.UUID
+import java.util.*
 
 data class Product(
   var id: String = "PROD_" + UUID.randomUUID(),
@@ -11,6 +11,6 @@ data class Product(
   val amount: BigDecimal,
   val adultsOnly: Boolean,
   val available: Boolean,
-  val addons: Map<String, BigDecimal>?,
+  val addons: List<String>?,
   val imageUrls: List<String>?
 )
