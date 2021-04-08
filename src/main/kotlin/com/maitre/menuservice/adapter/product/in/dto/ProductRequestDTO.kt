@@ -12,6 +12,6 @@ data class ProductRequestDTO(
     val amount: BigDecimal,
     val adultsOnly: Boolean,
     val available: Boolean,
-    val addons: List<String>?,
+    val addons: MutableList<String>?,
     val imageUrls: List<String>?
     )

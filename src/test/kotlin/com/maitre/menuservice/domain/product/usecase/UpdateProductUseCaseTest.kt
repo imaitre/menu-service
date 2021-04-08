@@ -66,7 +66,7 @@ class UpdateProductUseCaseTest {
         BigDecimal(29.99),
         false,
         true,
-        listOf(
+        mutableListOf(
             "OPTI_bc4743a8-1130-4127-a057-0aacc950a1e3",
             "OPTI_bc4743a8-1130-4127-a057-0aacc950a1e3"
         ),

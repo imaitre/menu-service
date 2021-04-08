@@ -1,8 +1,11 @@
 package com.maitre.menuservice.domain.optional.usecases
 
+import com.maitre.menuservice.domain.group.port.out.persistence.GetGroupsByMenuIdPort
 import com.maitre.menuservice.domain.optional.entity.Optional
 import com.maitre.menuservice.domain.optional.port.out.persistence.DeleteOptionalPort
 import com.maitre.menuservice.domain.optional.port.out.persistence.GetOptionalByIdPort
+import com.maitre.menuservice.domain.product.port.out.persistence.GetProductsByGroupPort
+import com.maitre.menuservice.domain.product.port.out.persistence.SaveProductPort
 import com.maitre.menuservice.exception.OptionalNotFoundException
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -18,8 +21,13 @@ class DeleteOptionalUseCaseTest{
    private val logger: Logger = mock()
     private val getOptionalByIdPort: GetOptionalByIdPort = mock()
     private val deleteOptionalPort: DeleteOptionalPort = mock()
+    private val getGroupsByMenuIdPort: GetGroupsByMenuIdPort = mock()
+    private val getProductsByGroupPort: GetProductsByGroupPort = mock()
+    private val saveProductPort: SaveProductPort = mock()
 
-    private val deleteOptionalUseCase =  DeleteOptionalUseCase(logger, getOptionalByIdPort, deleteOptionalPort)
+    private val deleteOptionalUseCase =
+        DeleteOptionalUseCase(logger, getOptionalByIdPort, deleteOptionalPort,
+            getGroupsByMenuIdPort, getProductsByGroupPort, saveProductPort)
 
     @Test
     fun `Test Delete Optional Use Case - verify if ports is being called`() {

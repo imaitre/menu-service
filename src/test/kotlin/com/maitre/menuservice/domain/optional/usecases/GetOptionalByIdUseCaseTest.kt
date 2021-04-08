@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
+import reactor.kotlin.core.publisher.toMono
 import reactor.test.StepVerifier
 
 class GetOptionalByIdUseCaseTest {
