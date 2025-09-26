@@ -22,7 +22,7 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 {
     "customer_id": "CUST_0c6e1cb0-df2e-414a-98fb-73b2b8ce6b63",
     "name": "Menu de segunda-feira",
-    "description": "Menu da segunda-feira pra iniciar a semana fininho.",
+    "description": "Menu da segunda-feira pra iniciar a semana.",
     "available": true
 }
 ```
@@ -46,8 +46,8 @@ The idea behind this app is to manage the necessities of a menu and its groups a
 ```json
 {
     "menu_id": "MENU_bc4743a8-1130-4127-a057-0aacc950a1e3",
-    "name": "Sorvetinhos do fininho",
-    "description": "Sorvetes delicia pro fininho viva a coca-cola!",
+    "name": "Sorvetes",
+    "description": "Sorvetes, gelattos!",
     "type": "ICE_CREAM",
     "available": true
 }
@@ -107,7 +107,7 @@ The idea behind this app is to manage the necessities of a menu and its groups a
     "available": true,
     "minimum": 0,
     "maximum": 2,
-    "description": "Escolha duas coberturas extra no seu sorvetinho",
+    "description": "Escolha duas coberturas extra no seu sorvete",
     "repeat": true,
     "addons": [
         {
